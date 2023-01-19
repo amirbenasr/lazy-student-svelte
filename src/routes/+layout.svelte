@@ -18,7 +18,8 @@
 				<a class="btn btn-ghost normal-case text-xl" href="/">Lazy-Student</a>
 			</div>
 			{#if !$page.data.profile}
-				<div class="btn btn-outlined"><a href="/login">Login</a></div>
+				<div class="btn bg-white text-black mr-2 hover:text-white hover:bg-black"><a href="/signup">Sign up</a></div>
+				<div class="btn bg-black text-white  hover:text-black hover:bg-white"><a href="/login">Login</a></div>
 			{/if}
 			{#if $page.data.profile}
 				<div class="flex-none">
