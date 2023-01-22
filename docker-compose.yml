@@ -1,0 +1,40 @@
+version: '1.0'
+services:
+
+  mysql-db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: "password"
+      MYSQL_DATABASE: lazystudent
+    # volumes:
+    #   - mysql:/var/lib/mysql
+    ports:
+      - '3306:3306'
+
+  backend:
+    container_name: backend
+    restart: always
+    image: jamesmlewi/lazy-backend
+    depends_on:
+      - mysql-db
+    ports:
+      - '3000:3000'
+      
+      
+  front:
+    container_name: front
+    build: .
+    depends_on:
+      - backend
+    ports:
+      - '5173:5173'
+    links:
+      - backend
+
+
+  
+    
+    
+       
+    

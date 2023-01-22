@@ -9,7 +9,7 @@ export const load: PageServerLoad = async ({ cookies, locals, fetch }) => {
 		throw redirect(301, '/');
 	}
 
-	const response: Response = await fetch('http://localhost:3000/projects/', {
+	const response: Response = await fetch('http://172.19.0.3:3000/projects/', {
 		credentials: 'include'
 	});
 

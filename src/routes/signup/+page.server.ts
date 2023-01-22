@@ -6,7 +6,7 @@ export const actions: Actions = {
 		const email = data.get('email');
 		const password = data.get('password');
 
-		const res = await fetch('http://localhost:3000/users/create', {
+		const res = await fetch('http://172.19.0.3:3000/users/create', {
 			method: 'POST',
 			body: JSON.stringify({ email, password }),
 			headers: {

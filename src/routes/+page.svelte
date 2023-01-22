@@ -1,10 +1,19 @@
-<script>
+<script type="ts">
 	import Icon from '@iconify/svelte';
 	import { goto } from '$app/navigation';
 	import { browser } from '$app/environment';
+	import type { PageData } from './$types';
 
-	export let data;
+	export let data: PageData;
+	let profile = data.profile;
 	let id = data.id;
+	const checkLogin = () => {
+		if (!profile) {
+			goto('/login');
+		} else {
+			goto('/projects');
+		}
+	};
 </script>
 
 <section>
@@ -19,9 +28,9 @@
 				passing..
 				<br />We need you to focus on other subjects, and leave us the room to make the work for you
 			</span>
-
+			NEW FEATURE
 			<div class="card-actions justify-end">
-				<button class="btn btn-primary" on:click={() => goto('/onboard')}>Get Started</button>
+				<button class="btn btn-primary" on:click={checkLogin}>Get Started</button>
 			</div>
 		</div>
 	</div>

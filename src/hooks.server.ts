@@ -13,14 +13,15 @@ export const handle: Handle = async ({ event, resolve }) => {
 	}
 
 	if (verifyToken(token)) {
-		console.log('no token');
+		// console.log(process.env.);
 
-		const response = await event.fetch('http://localhost:3000/profile/', {
+		const response = await event.fetch(`http://172.19.0.3:3000/profile/`, {
 			credentials: 'include'
 		});
 		const profile = await response.json();
 
 		event.locals.profile = profile;
+		console.log(event.locals.profile);
 
 		return await resolve(event);
 	}

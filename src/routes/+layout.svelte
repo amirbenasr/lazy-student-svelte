@@ -33,7 +33,7 @@
 							class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
 						>
 							<li>
-								<a href="/{$page.data.profile.user.name}" class="justify-between">
+								<a href="/wuhhh" class="justify-between">
 									Profile
 									<span class="badge">New</span>
 								</a>
@@ -56,7 +56,7 @@
 			<slot />
 		</div>
 
-		<footer class="footer footer-center p-4 bg-base-300 text-base-content">
+		<footer class="footer footer-center p-4 bg-base-300 text-base-content mt-4">
 			<div>
 				<p>Copyright © 2023 - All right reserved by LS-Co. Ltd</p>
 			</div>

@@ -6,8 +6,6 @@
 
 	export let form: ActionData;
 
-	export let data: PageData;
-
 	const submitLoginUser: SubmitFunction = ({ form, data, action, cancel }) => {
 		// console.log(form);
 
@@ -28,9 +26,9 @@
 	};
 </script>
 
-<div class="card shadow-2xl p-10   w-96 m-auto mb-8 ">
-	<h1 class="font-bold text-2xl self-center mb-8">Sign in to Lazy-Student</h1>
-	<form method="post" class="w-auto    " use:enhance={submitLoginUser}>
+<div class="card shadow-2xl pt-4 pb-4  w-96 m-auto mb-8 border-b-4 ">
+	<form method="post" class="w-auto border-b p-6" use:enhance={submitLoginUser}>
+		<h1 class="font-bold text-2xl self-center mb-8 text-center">Sign in to Lazy-Student</h1>
 		<div class="flex flex-col space-y-3">
 			<input
 				class="h-12 border-2 border-indigo-100 px-3"
@@ -54,6 +52,9 @@
 
 		<button type="submit" class="btn w-full mt-3 ">Login</button>
 	</form>
+	<span class="text-l text-center pt-3"
+		>Not a member yet? <a href="/signup" class="text-blue-400 hover:underline">Join now</a></span
+	>
 </div>
 
 <style>

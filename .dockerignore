@@ -1,0 +1,8 @@
+node_modules
+Dockerfile*
+.eslint*
+README.md
+.svelte-kit*
+.svelte*
+.prettier*
+

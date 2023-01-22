@@ -4,6 +4,8 @@
 
 	// import { type FormData } from '$app/environment/types';
 
+	import Techinput from './techinput.svelte';
+
 	let selectValue = '1';
 
 	let date = new Date().toISOString().slice(0, 10);
@@ -11,10 +13,10 @@
 	let submit = false;
 </script>
 
-<div class="flex flex-col  justify-center items-center w-full p-4 border-2 border-grey-200    ">
+<div class="flex flex-col border-2  justify-center items-center w-full">
 	<form method="post" use:enhance>
-		<div class="flex flex-nowrap justify-around mb-4  border-2 p-4">
-			<div id="first-section" class="flex w-96 max-w-96 flex-col space-y-1 ">
+		<div class="flex flex-nowrap justify-around mb-4 ">
+			<div id="first-section" class="flex flex-col  ">
 				<label for="project">
 					Project type
 					<select name="project-type" id="project" bind:value={selectValue} class="border-2">
@@ -30,16 +32,17 @@
 					</small>
 				</label>
 			</div>
+			<Techinput choice={selectValue} />
 		</div>
 
-		<div class="flex p-4 justify-around border-b-2 ">
-			<label for="project-pages" class="w-96">
+		<div class="flex p-4 justify-around  ">
+			<label for="project-pages" class="">
 				Number of pages
 				<input type="number" name="project-pages" id="project-pages" value="1" min="1" max="8" />
 				<br />
 				<small>e.g: If the app only contains a sign-up/login page<br /> , it's counted as 2</small>
 			</label>
-			<label for="project-pages" class="w-96">
+			<label for="project-pages" class="">
 				Deadline
 				<input type="date" name="project-deadline" id="project-pages" value={date} min={date} />
 				<br />
