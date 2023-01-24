@@ -14,7 +14,7 @@ declare namespace App {
 			avatar;
 			userId;
 			user: {
-				name;
+				username;
 			};
 		};
 	}

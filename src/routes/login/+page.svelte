@@ -1,5 +1,5 @@
 <script type="ts">
-	import { enhance, type SubmitFunction } from '$app/forms';
+	import { applyAction, enhance, type SubmitFunction } from '$app/forms';
 
 	import type { ActionData, PageData } from './$types';
 	import { success, failure, warning } from '$lib/components/toast';
@@ -7,15 +7,13 @@
 	export let form: ActionData;
 
 	const submitLoginUser: SubmitFunction = ({ form, data, action, cancel }) => {
-		// console.log(form);
-
 		return async ({ result, update }) => {
 			switch (result.type) {
 				case 'success':
 					success('Logged in Successfully!');
 					break;
 				case 'failure':
-					warning('Verify your credentials');
+					failure('Verify your credentials');
 					break;
 
 				default:
@@ -35,19 +33,19 @@
 				type="text"
 				name="email"
 				id="email"
-				value={form?.email ?? ''}
-				placeholder="Email / username"
+				placeholder="username/e-mail"
 			/>
+			{#if form?.missingEmail}<small>email field is required</small> {/if}
+
 			<input
 				type="password"
 				name="password"
 				id="password"
-				placeholder="Password"
+				placeholder="password"
 				class="h-12 border-2 border-indigo-100 px-3"
 			/>
-			{#if form?.empty}<small class="error" style="color: red;">password field is required</small>
+			{#if form?.missingPassword}<small class="error">password field is required</small>
 			{/if}
-			{#if form?.missing}<small style="color: red;">email field is required</small> {/if}
 		</div>
 
 		<button type="submit" class="btn w-full mt-3 ">Login</button>

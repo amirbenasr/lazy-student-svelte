@@ -11,15 +11,19 @@
 
 <SvelteToast options={{ reversed: true, intro: { y: 192 } }} />
 
-<div class="main-wraper">
+<div class="main-wraper  relative">
 	<div class="m-auto">
 		<div class="navbar flex">
 			<div class="flex-1">
 				<a class="btn btn-ghost normal-case text-xl" href="/">Lazy-Student</a>
 			</div>
 			{#if !$page.data.profile}
-				<div class="btn bg-white text-black mr-2 hover:text-white hover:bg-black"><a href="/signup">Sign up</a></div>
-				<div class="btn bg-black text-white  hover:text-black hover:bg-white"><a href="/login">Login</a></div>
+				<div class="btn bg-white text-black mr-2 hover:text-white hover:bg-black">
+					<a href="/signup">Sign up</a>
+				</div>
+				<div class="btn bg-black text-white  hover:text-black hover:bg-white">
+					<a href="/login">Login</a>
+				</div>
 			{/if}
 			{#if $page.data.profile}
 				<div class="flex-none">
@@ -34,7 +38,7 @@
 							class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
 						>
 							<li>
-								<a href="/wuhhh" class="justify-between">
+								<a href="/{$page.data.profile.user?.username ?? ''}" class="justify-between">
 									Profile
 									<span class="badge">New</span>
 								</a>
@@ -53,7 +57,7 @@
 			{/if}
 		</div>
 
-		<div class="container">
+		<div class="container  shadow-sm p-4 ">
 			<slot />
 		</div>
 
@@ -66,4 +70,10 @@
 </div>
 
 <style>
+	:root {
+		--toastContainerTop: auto;
+		--toastContainerRight: auto;
+		--toastContainerBottom: 8rem;
+		--toastContainerLeft: calc(50vw - 8rem);
+	}
 </style>

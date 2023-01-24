@@ -18,13 +18,17 @@ export const actions: Actions = {
 		const email = data.get('email') as string;
 		const password = data.get('password') as string;
 
+		if (!email && !password) {
+			return fail(400, { missingEmail: true, missingPassword: true });
+		}
 		if (!email) {
-			return fail(400, { email, missing: true });
+			return fail(400, { email, missingEmail: true });
 		}
 		if (!password) {
-			return fail(400, { empty: true });
+			return fail(400, { missingPassword: true });
 		}
-		const response = await fetch('http://172.19.0.3:3000/users/login', {
+
+		const response = await fetch('http://localhost:3000/users/login', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -37,14 +41,9 @@ export const actions: Actions = {
 		if (body.success) {
 			cookies.set('lazy-token', body.token);
 
-			// let userData: User = {
-			// 	id: '1',
-			// 	email: 'amirbennasr@gmail.com'
-			// };
-			// user.login(userData);
 			throw redirect(303, '/projects');
 		} else {
-			return fail(400);
+			return fail(400, { message: 'Verify your credentials' });
 		}
 	}
 };

@@ -4,6 +4,7 @@ import { createLogger } from 'vite';
 
 export const handle: Handle = async ({ event, resolve }) => {
 	const token = event.cookies.get('lazy-token');
+
 	if (!token) {
 		return await resolve(event);
 	}
@@ -15,13 +16,16 @@ export const handle: Handle = async ({ event, resolve }) => {
 	if (verifyToken(token)) {
 		// console.log(process.env.);
 
-		const response = await event.fetch(`http://172.19.0.3:3000/profile/`, {
-			credentials: 'include'
-		});
-		const profile = await response.json();
+		try {
+			const response = await event.fetch(`http://localhost:3000/profile/`, {
+				credentials: 'include'
+			});
+			const profile = await response.json();
 
-		event.locals.profile = profile;
-		console.log(event.locals.profile);
+			event.locals.profile = profile;
+		} catch (error) {
+			console.log(error);
+		}
 
 		return await resolve(event);
 	}
