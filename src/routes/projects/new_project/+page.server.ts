@@ -3,17 +3,22 @@ import type { Actions } from '@sveltejs/kit';
 
 export const actions: Actions = {
 	create: async ({ request }) => {
-		const data = await request.formData();
-		console.log(data);
+		const { project_title, project_deadline, project_pages, project_tech, project_type } =
+			Object.fromEntries(await request.formData()) as {
+				project_title: string;
+				project_deadline: string;
+				project_page: string;
+				project_tech: string;
+				project_type: string;
+				project_pages: string;
+			};
 
-		const deadline = data.get('deadline');
-		const projecttype = data.get('project-type');
-		console.log(projecttype);
+		// const project: Project = {
+		// 	deadline: new Date(project_deadline),
+		// 	name:project_title,
+		// 	description,
 
-		// const type
-		// const project :Project = {
-
-		// }
+		// };
 
 		return {
 			success: true,

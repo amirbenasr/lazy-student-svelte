@@ -24,8 +24,8 @@
 	};
 </script>
 
-<div class="card shadow-2xl pt-4 pb-4  w-96 m-auto mb-8 border-b-4 ">
-	<form method="post" class="w-auto border-b p-6" use:enhance={submitLoginUser}>
+<div class="w-auto card shadow-3xl pt-4 pb-4 mb-8 border-b-4  ">
+	<form method="post" use:enhance={submitLoginUser}>
 		<h1 class="font-bold text-2xl self-center mb-8 text-center">Sign in to Lazy-Student</h1>
 		<div class="flex flex-col space-y-3">
 			<input

@@ -60,7 +60,7 @@
 					</label>
 				</div>
 
-				<span class="font-semibold text-xl">{publicProfile.fname + publicProfile.lname}</span>
+				<span class="font-semibold text-xl">{publicProfile.fname + ' ' + publicProfile.lname}</span>
 			</div>
 		</div>
 		<div id="profile-details">
