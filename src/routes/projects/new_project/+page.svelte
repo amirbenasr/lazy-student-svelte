@@ -6,11 +6,10 @@
 	import { ProjectTech } from '$lib/utils/utils';
 	// import { type FormData } from '$app/environment/types';
 
-	let selectValue = '1';
+	let selectValue = 'MOBILE';
 
 	let date = new Date(new Date().getTime() + 60 * 60 * 24 * 1000).toISOString().slice(0, 10);
-	export let form: ActionData;
-	export let choice: string = '1';
+	export let choice: string = 'MOBILE';
 
 	let submit = false;
 	let titleLength: string = '';
@@ -28,7 +27,7 @@
 	action="?/create"
 	method="post"
 	use:enhance={({ form, data, cancel, action }) => {
-		console.log(form);
+		// console.log(Object.fromEntries(data));
 	}}
 >
 	<div class="border m-auto p-4  shadow-md box-content  space-y-4  ">
@@ -64,10 +63,10 @@
 				<div id="first-section" class="flex flex-col   ">
 					<select name="project_type" id="project" class="border-2 w-56" on:change={changeValue}>
 						<option disabled selected>select project type</option>
-						<option value="1">Web</option>
-						<option value="2">Mobile</option>
-						<option value="3">Backend</option>
-						<option value="4">Fullstack</option>
+						<option value="Web">Web</option>
+						<option value="Mobile">Mobile</option>
+						<option value="Backend">Backend</option>
+						<option value="Fullstack">Fullstack</option>
 					</select>
 					<small class="italic break block w-40 break-words ">
 						e.g: If you're looking to develop a website choose web,if mobile and web select
@@ -78,7 +77,7 @@
 				<div class="first-section  flex flex-col ">
 					<select name="project_tech" id="project-tech" class="border-2 max-w-md ">
 						<option disabled selected>select your technology</option>
-						{#each ProjectTech[choice] as tech}
+						{#each ProjectTech[choice.toUpperCase()] as tech}
 							<option value={tech} class="">{tech}</option>
 						{/each}
 					</select>
