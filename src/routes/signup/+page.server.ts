@@ -1,4 +1,5 @@
 import type { Actions } from '@sveltejs/kit';
+import { z } from 'zod';
 
 export const actions: Actions = {
 	default: async ({ request, cookies }) => {

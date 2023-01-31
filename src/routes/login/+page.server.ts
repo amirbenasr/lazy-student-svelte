@@ -4,30 +4,38 @@ import { user } from '$lib/stores/userStore';
 import { goto } from '$app/navigation';
 import { browser } from '$app/environment';
 import type { ServerLoad } from '@sveltejs/kit/types/internal';
+import { z } from 'zod';
+import type { string, ZodError } from 'zod/lib';
 
+const loginSchema = z.object({
+	email: z.string().email(),
+	password: z.string({ required_error: "Password can't be blank" }).min(5).max(64)
+});
 export const load: ServerLoad = async ({ cookies }) => {
 	const token = cookies.get('lazy-token');
 	if (token) throw redirect(303, '/');
-	// throw redirect(300, '/');
 };
 
 export const actions: Actions = {
 	default: async ({ cookies, locals, request }) => {
-		const data = await request.formData();
+		const data = await Object.fromEntries(await request.formData());
+		let credentials;
+		try {
+			credentials = loginSchema.parse(data);
 
-		const email = data.get('email') as string;
-		const password = data.get('password') as string;
+			console.log(credentials);
+		} catch (error: any) {
+			const { fieldErrors: errors } = error.flatten();
+			const { password, ...rest } = data;
+			console.log(errors);
 
-		if (!email && !password) {
-			return fail(400, { missingEmail: true, missingPassword: true });
-		}
-		if (!email) {
-			return fail(400, { email, missingEmail: true });
-		}
-		if (!password) {
-			return fail(400, { missingPassword: true });
+			return {
+				data: rest,
+				errors: errors
+			};
 		}
 
+		const { email, password } = credentials;
 		const response = await fetch('http://localhost:3000/users/login', {
 			method: 'POST',
 			headers: {
@@ -43,7 +51,9 @@ export const actions: Actions = {
 
 			throw redirect(303, '/projects');
 		} else {
-			return fail(400, { message: 'Verify your credentials' });
+			return {
+				wrong_password: true
+			};
 		}
 	}
 };

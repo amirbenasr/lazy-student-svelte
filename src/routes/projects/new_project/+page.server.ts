@@ -32,9 +32,12 @@ export const actions: Actions = {
 			}
 		});
 
+		console.log('server is called');
+
 		return {
 			success: true,
-			submit: true
+			submit: true,
+			project
 		};
 	}
 };
