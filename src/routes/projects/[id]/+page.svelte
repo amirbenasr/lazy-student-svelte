@@ -8,3 +8,7 @@
 <div class="project-id">project id {data.id}</div>
 
 {JSON.stringify(projectDetails)}
+
+<div class="flex-col">
+
+</div>
