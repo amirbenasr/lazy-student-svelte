@@ -44,6 +44,7 @@
 			{/if}
 
 			<input
+				value=""
 				type="password"
 				name="password"
 				id="password"

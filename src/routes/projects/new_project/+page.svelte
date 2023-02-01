@@ -1,26 +1,26 @@
 <script type="ts">
-	import { browser } from '$app/environment';
 	import { enhance } from '$app/forms';
 	import type { ActionData, PageData } from './$types';
 
 	import { ProjectTech } from '$lib/utils/utils';
 	import { Step, Stepper } from '@skeletonlabs/skeleton';
-	// import { type FormData } from '$app/environment/types';
 	import { writable, type Writable } from 'svelte/store';
 	import { onMount } from 'svelte';
+	import { draft } from '$lib/stores/draftStore';
 
 	export let data: PageData;
 	export let actionData: ActionData;
 
-	let selectValue = 'MOBILE';
+	let selectValue = 'WEB';
 	let numberOfPages = 1;
 	let totalPrice = 5;
-	let infoFilled: Boolean = false;
+	let locked: boolean = true;
 	const active: Writable<number> = writable(0);
 	let date = new Date(new Date().getTime() + 60 * 60 * 24 * 1000).toISOString().slice(0, 10);
-	export let choice: string = 'MOBILE';
+	export let choice: string = 'WEB';
 
 	let submit = false;
+	let PROJECT: any;
 	let titleLength: string = '';
 	const updatePrice = (e: Event) => {
 		const target = e.target as HTMLTextAreaElement;
@@ -32,28 +32,48 @@
 		selectValue = target.value as string;
 		choice = selectValue;
 	};
+	const checkLength = (e: Event) => {
+		const target = e.target as HTMLTextAreaElement;
+		selectValue = target.value as string;
+		if (selectValue.length > 15) {
+			locked = false;
+		} else {
+			locked = true;
+		}
+		console.log(locked);
+	};
 	const onComplete: any = () => {
 		/* handle the event */
-		alert(step);
+		numberOfPages = 1;
 		return;
 	};
 	const onNext: any = () => {
+		console.log(PROJECT);
+
 		/* handle the event */
-		alert(step);
+		// localStorage.setItem('draft', JSON.stringify(PROJECT));
 		return;
 	};
 
 	onMount(() => {
-		alert('re-render');
+		// alert('re-render');
+		numberOfPages = 1;
 	});
 	// stepper
 	let step = 0;
 </script>
 
-<form action="?/create" method="post">
+<form
+	action="?/create"
+	method="post"
+	use:enhance={({ data, cancel }) => {
+		PROJECT = Object.fromEntries(data);
+		draft.set(PROJECT);
+	}}
+>
 	<div class="border m-auto p-4   relative shadow-md box-content  space-y-4  ">
-		<Stepper {active} length={2} on:complete={onComplete} rounded="sm">
-			<Step index={0}>
+		<Stepper {active} length={2} on:complete={onComplete} rounded="sm" on:next={onNext}>
+			<Step {locked} index={0}>
 				<svelte:fragment slot="header">
 					<h3>Fill in necessary informations</h3>
 				</svelte:fragment>
@@ -74,7 +94,8 @@
 							rows="2"
 							class="w-full h-24 input pl-3  m-0 p-0 indent-36 shadow-md   align-baseline "
 							name="project_title"
-							bind:value={titleLength}
+							bind:value={$draft.project_title}
+							on:keyup={checkLength}
 							maxlength="80"
 						/>
 						<div class="counter">{titleLength.length}/80</div>
@@ -89,6 +110,7 @@
 					<div class="flex flex-grow  flex-col md:flex-row md:space-x-4  ">
 						<div id="first-section" class="flex flex-col   ">
 							<select
+								bind:value={$draft.project_type}
 								name="project_type"
 								id="project"
 								class="border-2 w-56"
@@ -107,9 +129,12 @@
 						</div>
 						<!-- Project technology -->
 						<div class="first-section  flex flex-col ">
-							<select name="project_tech" id="project-tech" class="border-2 max-w-md ">
-								<!-- <option disabled selected>select your technology</option> -->
-
+							<select
+								name="project_tech"
+								id="project-tech"
+								class="border-2 max-w-md"
+								bind:value={$draft.project_tech}
+							>
 								{#each ProjectTech[choice.toUpperCase()] as tech}
 									<option value={tech} class="">{tech}</option>
 								{/each}
@@ -137,7 +162,7 @@
 										type="number"
 										name="project_pages"
 										id="project-pages"
-										bind:value={numberOfPages}
+										bind:value={$draft.project_pages}
 										min="1"
 										max="8"
 										on:change={updatePrice}
@@ -165,7 +190,7 @@
 					</div>
 				</div>
 			</Step>
-			<Step index={1}>(hello world)</Step>
+			<Step locked={true} index={1}>(hello world)</Step>
 		</Stepper>
 
 		<div class="flex justify-center">
