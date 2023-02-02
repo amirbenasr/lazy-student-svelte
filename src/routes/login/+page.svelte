@@ -20,17 +20,15 @@
 					break;
 			}
 			update({ reset: false });
-			// applyAction(action);
 		};
 	};
 </script>
 
-<div class=" self-center box-content card shadow-3xl pt-4 pb-4  mb-8 border-b-4  ">
+<div class="card shadow-3xl pt-4 pb-4  mb-8 border-b-4  ">
 	<form method="post" class="flex flex-col items-center" use:enhance={submitLoginUser}>
 		<h2 class="font-bold text-md self-center mb-8 text-center">Sign in to Lazy-Student</h2>
-		<div class="flex flex-col  space-y-3 w-64">
+		<div class="flex flex-col ">
 			<input
-				class="h-12 border-2 w-32 border-indigo-100 px-3 relative"
 				type="text"
 				name="email"
 				id="email"
@@ -43,14 +41,7 @@
 				>
 			{/if}
 
-			<input
-				value=""
-				type="password"
-				name="password"
-				id="password"
-				placeholder="Password"
-				class="h-12 border-2 border-indigo-100 px-3"
-			/>
+			<input value="" type="password" name="password" id="password" placeholder="Password" />
 			{#if form?.errors?.password}<span class="text-sm font-extralight text-red-500 text-left"
 					>{form?.errors?.password[0] ?? ''}</span
 				>

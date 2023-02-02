@@ -5,7 +5,9 @@
 	import type { PageData } from './$types';
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
+	import Tech from '$lib/components/tech.svelte';
 
+	import { technologies } from '$lib/types/technology.type.ts';
 	export let data: PageData;
 	let profile = data.profile;
 	let id = data.id;
@@ -19,42 +21,38 @@
 </script>
 
 {#if !$page.data.profile}
-	<div class="mx-auto card lg:card-side shadow-xl text-center">
-		<figure>
+	<div class="prose mx-auto card lg:card-side shadow-xl text-center m-4">
+		<figure class="m-0">
 			<img
-				class="mx-auto"
 				src="https://media.istockphoto.com/id/494587588/photo/teacher-helping-a-trouble-teenager.jpg?s=612x612&w=0&k=20&c=E8DfAbG5Q5R2EVltLX8quIVlHOjGMZ2vUW6CtXri2j8="
 				alt="Album"
 			/>
 		</figure>
-		<div class="card-body">
-			<h2 class="card-title">Get your academic project done in Time:</h2>
+		<div class="card-body m-0">
+			<h2 class="card-title m-0">Get your academic project done in Time</h2>
 
-			<span
-				>We are here to help you finish your academic project, assignment or what ever you are
-				passing..
-				<br />We need you to focus on other subjects, and leave us the room to make the work for you
-			</span>
+			<p class="text-left">
+				We are here to help you finish your academic project, assignment or whatever you are
+				passing.. We need you to focus on other subjects, and leave us the room to make the work for
+				you
+			</p>
 			<div class="card-actions justify-end">
 				<button class="btn " on:click={checkLogin}>Get Started</button>
+				<button class="btn btn-info" on:click={checkLogin}>How does it work?</button>
 			</div>
 		</div>
 	</div>
-	<!-- <div class="card">
-		<h1>
-			Get your academic <Icon icon="icon-park-twotone:bachelor-cap-one" /> project done in Time:
-		</h1>
+	<div class="divider" />
+	<div class="prose max-w-none w-full ">
+		<h1>Academic Projects that we support</h1>
 
-		<span
-			>We are here to help you finish your academic project, assignment or what ever you are
-			passing..
-			<br />We need you to focus on other subjects, and leave us the room to make the work for you
-			and help you pass your exams, we don't want you to be lazy, but either we don't want you to
-			fail..
-		</span>
-
-		<button class="btn w-auto" on:click={() => goto('/onboard')}>Get Started</button>
-	</div> -->
+		<!-- ... -->
+		<div class="flex flex-wrap   ">
+			{#each technologies as technology}
+				<Tech {technology} />
+			{/each}
+		</div>
+	</div>
 {/if}
 
 {#if $page.data.profile}

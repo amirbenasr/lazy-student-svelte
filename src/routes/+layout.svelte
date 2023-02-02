@@ -12,10 +12,10 @@
 	</div>
 
 	{#if !$page.data.profile}
-		<div class="btn  text-black mr-2  ">
+		<div class="btn btn-secondary  ">
 			<a href="/signup">Sign up</a>
 		</div>
-		<div class="btn  text-white   ">
+		<div class="ml-2 btn btn-outline">
 			<a href="/login">Login</a>
 		</div>
 	{/if}
@@ -24,8 +24,19 @@
 			<!-- Trigger: apply the 'use:menu' action and supply the unique menu ID -->
 
 			<!-- Menu: set a matching 'data-menu-[menuId]' attribute -->
-			<div data-menu="example" class="w-24 bg-slate-50 p-1">
-				<ul class="">
+			<div class="dropdown dropdown-end">
+				<label tabindex="0">
+					<div class="avatar  online cursor-pointer">
+						<div class="w-12 rounded-full">
+							<img src="https://picsum.photos/200/300" class="w-24 h-24" />
+						</div>
+					</div>
+				</label>
+
+				<ul
+					tabindex="0"
+					class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 divide-y-2"
+				>
 					<li>
 						<a href="/{$page.data.profile.user?.username ?? ''}" class="justify-between">
 							Profile
@@ -85,71 +96,3 @@
 		<p>Copyright © 2023 - All right reserved by LS-Co. Ltd</p>
 	</div>
 </footer>
-<!-- <SvelteToast options={{ reversed: true, intro: { y: 192 } }} />
-<div class="main-wraper  relative">
-	<div class="m-auto">
-		<div class="navbar flex">
-			<div class="flex-1">
-				<a class="btn btn-ghost normal-case text-xl" href="/">Lazy-Student</a>
-			</div>
-			<LightSwitch />
-			{#if !$page.data.profile}
-				<div class="btn bg-white text-black mr-2 hover:text-white hover:bg-black">
-					<a href="/signup">Sign up</a>
-				</div>
-				<div class="btn bg-black text-white  hover:text-black hover:bg-white">
-					<a href="/login">Login</a>
-				</div>
-			{/if}
-			{#if $page.data.profile}
-				<div class="flex-none">
-					<div class="dropdown dropdown-end">
-						<label tabindex="-1" for="" class="btn btn-ghost btn-circle avatar">
-							<div class="w-10 rounded-full">
-								<img src="https://placeimg.com/80/80/people" alt="" />
-							</div>
-						</label>
-						<ul
-							tabindex="-1"
-							class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
-						>
-							<li>
-								<a href="/{$page.data.profile.user?.username ?? ''}" class="justify-between">
-									Profile
-									<span class="badge">New</span>
-								</a>
-							</li>
-							<li>
-								<a href="/projects" class="justify-between">Projects</a>
-							</li>
-							<li>
-								<form method="post" action="/logout?/logout">
-									<button>Logout</button>
-								</form>
-							</li>
-						</ul>
-					</div>
-				</div>
-			{/if}
-		</div>
-
-		<div class="container  shadow-sm p-4 ">
-			<slot />
-		</div>
-
-		<footer class="footer footer-center p-4 bg-base-300 text-base-content mt-4">
-			<div>
-				<p>Copyright © 2023 - All right reserved by LS-Co. Ltd</p>
-			</div>
-		</footer>
-	</div>
-</div>
-
-<style>
-	:root {
-		--toastContainerTop: auto;
-		--toastContainerRight: auto;
-		--toastContainerBottom: 8rem;
-		--toastContainerLeft: calc(50vw - 8rem);
-	}
-</style> -->
