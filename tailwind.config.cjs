@@ -1,18 +1,46 @@
 const config = {
-	darkMode: 'class',
-	content: [
-		'./src/**/*.{html,js,svelte,ts}',
-		require('path').join(require.resolve('@skeletonlabs/skeleton'), '../**/*.{html,js,svelte,ts}')
-	],
+	content: ['./src/**/*.{html,js,svelte,ts}'],
 
 	plugins: [
 		// Keep any existing plugins present and append the following:
 		require('@tailwindcss/forms'),
 		require('@tailwindcss/line-clamp'),
 		require('@tailwindcss/typography'),
-		...require('@skeletonlabs/skeleton/tailwind/skeleton.cjs')()
+		require('daisyui')
 	],
-
+	daisyui: {
+		themes: [
+			'light',
+			'dark',
+			'cupcake',
+			'bumblebee',
+			'emerald',
+			'corporate',
+			'synthwave',
+			'retro',
+			'cyberpunk',
+			'valentine',
+			'halloween',
+			'garden',
+			'forest',
+			'aqua',
+			'lofi',
+			'pastel',
+			'fantasy',
+			'wireframe',
+			'black',
+			'luxury',
+			'dracula',
+			'cmyk',
+			'autumn',
+			'business',
+			'acid',
+			'lemonade',
+			'night',
+			'coffee',
+			'winter'
+		]
+	},
 	theme: {
 		container: {
 			center: true

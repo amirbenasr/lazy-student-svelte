@@ -1,59 +1,48 @@
 <script lang="ts">
 	// import '@skeletonlabs/skeleton/themes/';
-	import '@skeletonlabs/skeleton/themes/theme-skeleton.css';
-
-	import '@skeletonlabs/skeleton/styles/all.css';
-	import '../app.postcss';
-	import { menu } from '@skeletonlabs/skeleton';
 
 	// Optionally set default options here
-
+	import '../app.postcss';
 	import { page } from '$app/stores';
-	import { LightSwitch, AppShell, Avatar } from '@skeletonlabs/skeleton';
 </script>
 
-<AppShell>
-	<LightSwitch></LightSwitch>
-	<div class="navbar flex p-1">
-		<div class="flex-1">
-			<a class="btn btn-ghost normal-case text-xl" href="/">Lazy-Student</a>
+<div class="navbar flex p-1">
+	<div class="flex-1">
+		<a class="btn btn-ghost normal-case text-xl" href="/">Lazy-Student</a>
+	</div>
+
+	{#if !$page.data.profile}
+		<div class="btn  text-black mr-2  ">
+			<a href="/signup">Sign up</a>
 		</div>
+		<div class="btn  text-white   ">
+			<a href="/login">Login</a>
+		</div>
+	{/if}
+	{#if $page.data.profile}
+		<span class="relative">
+			<!-- Trigger: apply the 'use:menu' action and supply the unique menu ID -->
 
-		{#if !$page.data.profile}
-			<div class="btn  text-black mr-2  ">
-				<a href="/signup">Sign up</a>
+			<!-- Menu: set a matching 'data-menu-[menuId]' attribute -->
+			<div data-menu="example" class="w-24 bg-slate-50 p-1">
+				<ul class="">
+					<li>
+						<a href="/{$page.data.profile.user?.username ?? ''}" class="justify-between">
+							Profile
+						</a>
+					</li>
+					<li>
+						<a href="/projects" class="justify-between"> Projects </a>
+					</li>
+					<li>
+						<form method="post" action="/logout?/logout">
+							<button>Logout</button>
+						</form>
+					</li>
+				</ul>
 			</div>
-			<div class="btn  text-white   ">
-				<a href="/login">Login</a>
-			</div>
-		{/if}
-		{#if $page.data.profile}
-			<span class="relative">
-				<!-- Trigger: apply the 'use:menu' action and supply the unique menu ID -->
-				<button use:menu={{ menu: 'example' }}>
-					<Avatar />
-				</button>
-
-				<!-- Menu: set a matching 'data-menu-[menuId]' attribute -->
-				<div data-menu="example" class="w-24 bg-slate-50 p-1">
-					<ul class="">
-						<li>
-							<a href="/{$page.data.profile.user?.username ?? ''}" class="justify-between">
-								Profile
-							</a>
-						</li>
-						<li>
-							<a href="/projects" class="justify-between"> Projects </a>
-						</li>
-						<li>
-							<form method="post" action="/logout?/logout">
-								<button>Logout</button>
-							</form>
-						</li>
-					</ul>
-				</div>
-			</span>
-			<!-- <div class="flex-none">
+		</span>
+		<!-- <div class="flex-none">
 				<div class="dropdown dropdown-end">
 					<label tabindex="-1" for="" class="btn btn-ghost btn-circle avatar">
 						<div class="w-10 rounded-full">
@@ -81,23 +70,21 @@
 					</ul>
 				</div>
 			</div> -->
-		{/if}
-	</div>
-	<!-- Router Slot -->
-	<hr />
-	<div class="w-3/4 mx-auto">
-		<slot />
-	</div>
-	<hr />
+	{/if}
+</div>
+<!-- Router Slot -->
+<hr />
+<div class="w-3/4 mx-auto">
+	<slot />
+</div>
+<hr />
 
-	<!-- ---- / ---- -->
-	<footer class="footer footer-center p-4 bg-base-300 text-base-content mt-4">
-		<div>
-			<p>Copyright © 2023 - All right reserved by LS-Co. Ltd</p>
-		</div>
-	</footer>
-</AppShell>
-
+<!-- ---- / ---- -->
+<footer class="footer footer-center p-4 bg-base-300 text-base-content mt-4">
+	<div>
+		<p>Copyright © 2023 - All right reserved by LS-Co. Ltd</p>
+	</div>
+</footer>
 <!-- <SvelteToast options={{ reversed: true, intro: { y: 192 } }} />
 <div class="main-wraper  relative">
 	<div class="m-auto">
