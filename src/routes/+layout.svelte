@@ -1,5 +1,7 @@
 <script lang="ts">
-	import '@skeletonlabs/skeleton/themes/theme-rocket.css';
+	// import '@skeletonlabs/skeleton/themes/';
+	import '@skeletonlabs/skeleton/themes/theme-skeleton.css';
+
 	import '@skeletonlabs/skeleton/styles/all.css';
 	import '../app.postcss';
 	import { menu } from '@skeletonlabs/skeleton';
@@ -11,6 +13,7 @@
 </script>
 
 <AppShell>
+	<LightSwitch></LightSwitch>
 	<div class="navbar flex p-1">
 		<div class="flex-1">
 			<a class="btn btn-ghost normal-case text-xl" href="/">Lazy-Student</a>
