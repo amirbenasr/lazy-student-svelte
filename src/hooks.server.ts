@@ -7,7 +7,7 @@ const getUserAvatar = (profile: any): string => {
 	if (profile.avatar === 'monkey') {
 		return config['media-url'] + 'default/' + 'monkey.jpg';
 	}
-	return config['media-url'] + profile.user.username + profile.avatar;
+	return config['media-url'] + profile.user.username + '/profile.jpg';
 };
 export const handle: Handle = async ({ event, resolve }) => {
 	const token = event.cookies.get('lazy-token');

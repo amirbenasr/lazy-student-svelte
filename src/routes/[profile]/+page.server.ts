@@ -1,4 +1,9 @@
-import { fromFormToProfile, fromProfileToJson, type Profile } from '$lib/types/profile.type';
+import {
+	fromFormToProfile,
+	fromProfileToFormData,
+	fromProfileToJson,
+	type Profile
+} from '$lib/types/profile.type';
 import { error, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 
@@ -21,12 +26,20 @@ export const load: PageServerLoad = async ({ fetch, locals, params }) => {
 
 export const actions: Actions = {
 	update: async ({ request, fetch }) => {
-		const profile: Profile = fromFormToProfile(Object.fromEntries(await request.formData()));
+		console.log('test');
+
+		// const profile: Profile =  fromFormToProfile(bject.fromEntries(await request.formData()));
+		const data = Object.fromEntries(await request.formData());
+		let form: FormData = new FormData();
+		form.append('avatar', new Blob(['Hello World!\n']), 'test');
+		form.append('fname', 'test');
+		form.append('lname', 'hola');
+		// form.append('avatar',data.get('image') as File);
+		// const test = fromProfileToFormData(profile);
 		const result = await fetch('http://localhost:3000/profile/', {
 			method: 'PUT',
 			credentials: 'include',
-			headers: { 'Content-Type': 'application/json' },
-			body: fromProfileToJson(profile)
+			body: form
 		});
 		console.log(await result.json());
 	}
