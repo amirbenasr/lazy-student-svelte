@@ -1,9 +1,10 @@
 <script type="ts">
+	import { formatGenericDate, formatReadableDate } from '$lib/utils/utils';
 	import type { PageData, PageServerData } from './$types';
 
 	export let data: PageServerData;
 
-	const { publicProfile } = data;
+	const { publicProfile, profile } = data;
 
 	let selected: Boolean = true;
 
@@ -55,7 +56,7 @@
 						{#if avatar}
 							<img id="avatar" src={avatar} alt="avatar" class="h-40 w-40 rounded-full " />
 						{:else}
-							<img src="https://placeimg.com/80/80/people" alt="" class="h-40 w-40 rounded-full " />
+							<img src={profile.avatar} alt="" class="h-40 w-40 rounded-full " />
 						{/if}
 					</label>
 				</div>
@@ -70,7 +71,7 @@
 			</div>
 			<div id="since" class="flex justify-between p-2">
 				<p class="font-light">Member Since</p>
-				<p class="font-medium">2022-01-04</p>
+				<p class="font-medium">{formatReadableDate(profile.createdAt)}</p>
 			</div>
 		</div>
 	</section>

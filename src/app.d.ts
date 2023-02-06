@@ -13,6 +13,7 @@ declare namespace App {
 			bio;
 			avatar;
 			userId;
+			createdAt;
 			user: {
 				username;
 			};

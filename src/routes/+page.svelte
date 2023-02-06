@@ -10,7 +10,7 @@
 	import { technologies } from '$lib/types/technology.type.ts';
 	export let data: PageData;
 	let profile = data.profile;
-	let id = data.id;
+	let id = data?.id;
 	const checkLogin = () => {
 		if (!profile) {
 			goto('/login');
@@ -21,7 +21,7 @@
 </script>
 
 {#if !$page.data.profile}
-	<div class="prose mx-auto card lg:card-side shadow-xl text-center m-4">
+	<div class="prose mx-auto card  shadow-xl text-center m-4">
 		<figure class="m-0">
 			<img
 				src="https://media.istockphoto.com/id/494587588/photo/teacher-helping-a-trouble-teenager.jpg?s=612x612&w=0&k=20&c=E8DfAbG5Q5R2EVltLX8quIVlHOjGMZ2vUW6CtXri2j8="
@@ -64,7 +64,7 @@
 			have no projects , select the button below to create your first project.
 		</p>
 		<a href="/projects/new_project">
-			<button class="btn gap-2"> Create your project </button>
+			<button class="btn gap-2 m-1"> Create your project </button>
 		</a>
 	</section>
 {/if}

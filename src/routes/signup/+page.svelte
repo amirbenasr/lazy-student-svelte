@@ -16,23 +16,40 @@
 	<form method="POST" class="flex flex-col items-center" use:enhance={submitFunction}>
 		<div class="flex flex-col space-y-4">
 			<input
-				placeholder="Email or username"
+				class="input input-bordered"
+				placeholder="Email"
 				type="email"
 				name="email"
 				id="email"
 				value={form?.data.email ?? ''}
 			/>
 			{#if form?.errors.email}
-				<span class="text-sm font-extralight text-red-500 text-left">{form?.errors.email[0]}</span>
-			{/if}
-
-			<input value="" type="password" name="password" placeholder="Password" id="password" />
-			{#if form?.errors.password}
-				<span class="text-sm font-extralight text-red-500 text-left"
-					>{form?.errors.password[0]}</span
-				>
+				<span class="label-text-alt text-error">{form?.errors.email[0]}</span>
 			{/if}
 			<input
+				class="input input-bordered"
+				placeholder="username"
+				type="text"
+				name="username"
+				id="username"
+			/>
+			<!-- {#if form?.errors.username}
+			<span class="label-text-alt text-error">{form?.errors.email[0]}</span>
+		{/if} -->
+
+			<input
+				class="input input-bordered"
+				value=""
+				type="password"
+				name="password"
+				placeholder="Password"
+				id="password"
+			/>
+			{#if form?.errors.password}
+				<span class="label-text-alt text-error">{form?.errors.password[0]}</span>
+			{/if}
+			<input
+				class="input input-bordered"
 				value=""
 				type="password"
 				name="confirmpassword"
@@ -40,12 +57,10 @@
 				id="password"
 			/>
 			{#if form?.errors.confirmpassword}
-				<span class="text-sm font-extralight text-red-500 text-left"
-					>{form?.errors.confirmpassword[0]}</span
-				>
+				<span class="label-text-alt text-error">{form?.errors.confirmpassword[0]}</span>
 			{/if}
 		</div>
-		<button type="submit" class="mt-8 mb-8">Sign-up</button>
+		<button type="submit" class="btn mt-8 mb-4 w-52">Sign-up</button>
 	</form>
 </div>
 

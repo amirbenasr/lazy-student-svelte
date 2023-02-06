@@ -1,7 +1,14 @@
 import { verifyToken } from '$lib/utils/others';
 import type { Handle } from '@sveltejs/kit';
 import { createLogger } from 'vite';
+import { config } from '$lib/utils/config';
 
+const getUserAvatar = (profile: any): string => {
+	if (profile.avatar === 'monkey') {
+		return config['media-url'] + 'default/' + 'monkey.jpg';
+	}
+	return config['media-url'] + profile.user.username + profile.avatar;
+};
 export const handle: Handle = async ({ event, resolve }) => {
 	const token = event.cookies.get('lazy-token');
 
@@ -23,6 +30,8 @@ export const handle: Handle = async ({ event, resolve }) => {
 			const profile = await response.json();
 
 			event.locals.profile = profile;
+			// process userAvatar using local config
+			event.locals.profile.avatar = getUserAvatar(profile);
 		} catch (error) {
 			console.log(error);
 		}

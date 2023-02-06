@@ -6,6 +6,10 @@ const signupSchema = z
 	.object({
 		email: z.string({ required_error: 'Email is required' }).email(),
 		password: z.string({ required_error: 'Password' }).min(5).max(64),
+		username: z
+			.string({ required_error: 'username must have at least 4 characters' })
+			.min(4)
+			.max(32),
 		confirmpassword: z.string().min(5).max(64)
 	})
 	.superRefine(({ password, confirmpassword }, ctx) => {
@@ -41,10 +45,10 @@ export const actions: Actions = {
 			};
 		}
 
-		const { email, password } = validation;
+		const { email, username, password } = validation;
 		const res = await fetch('http://localhost:3000/users/create', {
 			method: 'POST',
-			body: JSON.stringify({ email, password }),
+			body: JSON.stringify({ email, username, password }),
 			headers: {
 				'Content-type': 'application/json'
 			}

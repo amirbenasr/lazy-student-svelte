@@ -14,7 +14,8 @@ export const load: PageServerLoad = async ({ fetch, locals, params }) => {
 	const profile: Profile = fromFormToProfile(await result.json());
 
 	return {
-		publicProfile: profile
+		publicProfile: profile,
+		profile: locals.profile
 	};
 };
 
