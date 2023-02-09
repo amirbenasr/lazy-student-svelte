@@ -26,7 +26,7 @@
 	</div>
 	<!-- <Datetimer id={project.id} date={Date.parse(project.deadline.toString())} /> -->
 	<div class="card-actions justify-end mr-4 ">
-		<div class="dropdown dropdown-bottom cursor-pointer">
+		<div class="dropdown dropdown-bottom ">
 			<label tabindex="0" class="cursor-pointer">
 				<svg
 					class="text-black"

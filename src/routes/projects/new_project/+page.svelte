@@ -1,25 +1,19 @@
 <script type="ts">
 	import { enhance } from '$app/forms';
-	import type { ActionData, PageData } from './$types';
+	import type { ActionData } from './$types';
 
 	import { ProjectTech } from '$lib/utils/utils';
-	import { writable, type Writable } from 'svelte/store';
-	import { onMount } from 'svelte';
-	import { draft } from '$lib/stores/draftStore';
+	import { onMount, tick } from 'svelte';
+	import toast, { Toaster } from 'svelte-french-toast';
 
-	export let data: PageData;
-	export let actionData: ActionData;
+	export let form: ActionData;
 
 	let selectValue = 'WEB';
 	let numberOfPages = 1;
 	let totalPrice = 5;
-	let locked: boolean = true;
-	const active: Writable<number> = writable(0);
 	let date = new Date(new Date().getTime() + 60 * 60 * 24 * 1000).toISOString().slice(0, 10);
 	export let choice: string = 'WEB';
 
-	let submit = false;
-	let PROJECT: any;
 	let titleLength: string = '';
 	const updatePrice = (e: Event) => {
 		const target = e.target as HTMLTextAreaElement;
@@ -31,43 +25,49 @@
 		selectValue = target.value as string;
 		choice = selectValue;
 	};
-	const checkLength = (e: Event) => {
-		const target = e.target as HTMLTextAreaElement;
-		selectValue = target.value as string;
-		if (selectValue.length > 15) {
-			locked = false;
-		} else {
-			locked = true;
-		}
-		console.log(locked);
-	};
-	const onComplete: any = () => {
-		/* handle the event */
-		numberOfPages = 1;
-		return;
-	};
-	const onNext: any = () => {
-		console.log(PROJECT);
 
-		/* handle the event */
-		// localStorage.setItem('draft', JSON.stringify(PROJECT));
-		return;
-	};
-
-	onMount(() => {
-		// alert('re-render');
-		numberOfPages = 1;
-	});
 	// stepper
-	let step = 0;
+	let textElement: HTMLElement;
+	let categoryElement: HTMLElement;
+	let pagesElement: HTMLElement;
+
+	function updateTitle(
+		event: KeyboardEvent & { currentTarget: EventTarget & HTMLTextAreaElement }
+	): any {
+		console.log(event.currentTarget.value);
+		const value = event.currentTarget.value;
+		titleLength = value;
+	}
+	const scrollToBottom = async (node: HTMLElement) => {
+		node.scrollIntoView({ behavior: 'smooth', block: 'start' });
+	};
+
+	const delay = (ms: number) => {
+		return new Promise((resolve) => setTimeout(resolve, ms));
+	};
 </script>
 
 <form
 	action="?/create"
-	method="post"
-	use:enhance={({ data, cancel }) => {
-		PROJECT = Object.fromEntries(data);
-		draft.set(PROJECT);
+	method="POST"
+	use:enhance={({ data, cancel, action, controller }) => {
+		return async ({ update, action, result }) => {
+			toast.promise(delay(3000), {
+				loading: 'Creating Project...',
+				success: 'Project created!',
+				error: 'Could not create project.'
+			});
+
+			// const { errors, project } = result.data;
+			// if (errors.name) {
+			// 	scrollToBottom(textElement);
+			// }
+			// if (errors.category || errors.technology) {
+			// 	scrollToBottom(categoryElement);
+			// }
+
+			update({ reset: false });
+		};
 	}}
 >
 	<div class="border m-auto p-4   relative shadow-md box-content  space-y-4  ">
@@ -80,42 +80,53 @@
 					working on it</span
 				>
 			</div>
-			<div class="flex-grow relative  inline-block align-baseline m-0 p-0 ">
+			<div bind:this={textElement} class="flex-grow relative  inline-block align-baseline m-0 p-0 ">
 				<span class="absolute top-0  z-10 left-2">This project is about</span>
 				<textarea
 					cols="2"
 					rows="2"
 					class="w-full h-24 input pl-3  m-0 p-0 indent-36 shadow-md   align-baseline "
-					name="project_title"
-					bind:value={$draft.project_title}
-					on:keyup={checkLength}
+					name="name"
 					maxlength="80"
+					on:keyup={updateTitle}
+					value={form?.project.name ?? ''}
 				/>
-				<div class="counter">{titleLength.length}/80</div>
+				<div class="flex justify-between">
+					{#if form?.errors?.name}
+						<span class="label-text text-error text-sm">{form.errors.name[0]}</span>
+					{/if}
+					<div class="label-text  ">{titleLength.length}/80</div>
+				</div>
 			</div>
 		</div>
-		<!-- Category section -->
+		<!-- Category & Technology section -->
 		<div class="project-category-section flex space-x-4  md:space-x-24 border p-4 w-full">
 			<div class="text flex flex-col w-32 max-w-sm">
-				<span class="flex-shrink-0 text-2xl">Category & Technology</span>
+				<span class=" text-2xl">Category & Technology</span>
 				<span>Select the Category of the app you want to create,and the technology</span>
 			</div>
-			<div class="flex flex-grow  flex-col md:flex-row md:space-x-4  ">
-				<div id="first-section" class="flex flex-col   ">
+			<div class="flex flex-1 flex-col md:flex-row space-x-2 ">
+				<div id="first-section" class="flex flex-col ">
 					<select
-						bind:value={$draft.project_type}
-						name="project_type"
+						bind:this={categoryElement}
+						name="type"
 						id="project"
-						class="border-2 w-56"
+						class="select {form?.errors.type ? 'select-error' : ''}   max-w-md"
 						on:change={changeValue}
+						value={form?.project.type ?? ''}
 					>
+						<option value="" disabled selected>Select Category</option>
+
 						<!-- <option disabled selected>select project type</option> -->
-						<option value="Web">Web</option>
-						<option value="Mobile">Mobile</option>
-						<option value="Backend">Backend</option>
-						<option value="Fullstack">Fullstack</option>
+						<option value="WEB">Web</option>
+						<option value="MOBILE">Mobile</option>
+						<option value="BACKEND">Backend</option>
+						<option value="FULLSTACK">Fullstack</option>
 					</select>
-					<small class="italic break block w-40 break-words ">
+					{#if form?.errors.type}
+						<span class="label-text text-error"> {form.errors.type[0]} </span>
+					{/if}
+					<small class="italic break block break-words ">
 						e.g: If you're looking to develop a website choose web,if mobile and web select
 						Full-stack
 					</small>
@@ -123,15 +134,22 @@
 				<!-- Project technology -->
 				<div class="first-section  flex flex-col ">
 					<select
-						name="project_tech"
+						name="technology"
 						id="project-tech"
-						class="border-2 max-w-md"
-						bind:value={$draft.project_tech}
+						class="select {form?.errors.technology ? 'select-error' : ''} max-w-md "
+						value={form?.project?.technology ?? ''}
 					>
+						<option value="" disabled selected>Select Technology</option>
 						{#each ProjectTech[choice.toUpperCase()] as tech}
-							<option value={tech} class="">{tech}</option>
+							<option value={tech.toUpperCase()} class="">{tech}</option>
 						{/each}
 					</select>
+
+					{#if form?.errors.technology}
+						<span class="label-text text-error">
+							{form.errors.technology[0]}
+						</span>
+					{/if}
 					<small class="italic">Technology that the project requires</small>
 				</div>
 			</div>
@@ -149,45 +167,44 @@
 				<div class="flex md:space-x-4  ">
 					<div class="">
 						<label for="project-pages" class="flex flex-col  ">
-							Number of pages
+							<span class="label-text">Number of pages</span>
 							<input
-								class="border-2 "
+								class="border-2 input "
 								type="number"
-								name="project_pages"
+								name="pages"
 								id="project-pages"
-								bind:value={$draft.project_pages}
+								value={form?.project.pages ?? '1'}
 								min="1"
 								max="8"
+								bind:this={pagesElement}
 								on:change={updatePrice}
 							/>
-							<small class="w-40"
+							<small class="italic"
 								>e.g: If the app only contains a sign-up/login page,it's counted as 2</small
 							>
 						</label>
 					</div>
 					<div class="deadline">
 						<label for="project-deadline" class="flex flex-col  w-36">
-							Deadline
+							<span class="label-text">Deadline</span>
 							<input
 								type="date"
-								name="project_deadline"
-								id="project-pages"
+								name="deadline"
+								id="project_deadline"
 								value={date}
 								min={date}
-								class="border-2 "
+								class="border-2 input "
 							/>
-							<small>the latest time or date by which the project should be completed</small>
+							<small class="italic"
+								>the latest time or date by which the project should be completed</small
+							>
 						</label>
 					</div>
 				</div>
 			</div>
 		</div>
 
-		<div class="flex justify-center">
-			{#if step === 2}
-				<button class="btn" type="submit">Creat Project</button>
-			{/if}
-		</div>
+		<button class="btn btn-primary w-full" type="submit">Creat project</button>
 	</div>
 </form>
 

@@ -3,6 +3,9 @@ export type Profile = {
 	lname: string;
 	bio?: string;
 	dob: Date;
+	user: {
+		username: string;
+	};
 };
 
 export function fromProfileToJson(profile: Profile) {

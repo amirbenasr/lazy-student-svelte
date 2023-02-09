@@ -15,7 +15,7 @@ export const technologies: Array<technology> = [
 		description:
 			'React is a free and open-source front-end JavaScript library for building user interfaces based on UI components.',
 		image: '/images/react.png',
-		name: 'ReactJS'
+		name: 'React'
 	},
 	{
 		description: 'Build a static website,using javascript/css/html.',

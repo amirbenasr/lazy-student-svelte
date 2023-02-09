@@ -1,10 +1,9 @@
 <script type="ts">
 	import { enhance } from '$app/forms';
 	import type { ActionData, PageData } from './$types';
+	import Techinput from './techinput.svelte';
 
 	// import { type FormData } from '$app/environment/types';
-
-	import Techinput from './techinput.svelte';
 
 	let selectValue = '1';
 

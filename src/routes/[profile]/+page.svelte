@@ -103,7 +103,9 @@
 
 				<div class="flex justify-start space-x-4 p-2">
 					<button class="btn btn-xs btn-primary">Confirm</button>
-					<button class="btn btn-xs " on:click={() => (editing = false)}>Cancel</button>
+					<button type="submit" class="btn btn-xs " on:click={() => (editing = false)}
+						>Cancel</button
+					>
 				</div>
 			{/if}
 		</form>

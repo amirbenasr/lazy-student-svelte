@@ -1,11 +1,14 @@
 <script lang="ts">
 	// import '@skeletonlabs/skeleton/themes/';
+	import toast, { Toaster } from 'svelte-french-toast';
 
 	// Optionally set default options here
 	import '../app.postcss';
 	import { page } from '$app/stores';
 	import Footer from '$lib/components/footer.svelte';
 </script>
+
+<Toaster />
 
 <nav class="navbar flex p-1 bg-base-200">
 	<div class="flex-1">
