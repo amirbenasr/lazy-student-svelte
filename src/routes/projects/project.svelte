@@ -24,12 +24,11 @@
 		Submitted by {project.name} <br />
 		{formatRelative(new Date(), Date.parse(project.deadline.toString()))}
 	</div>
-	<div class="card" data-menu="project-menu">menu</div>
 	<!-- <Datetimer id={project.id} date={Date.parse(project.deadline.toString())} /> -->
-	<div class="card-actions justify-end mr-4">
-		<button use:menu={{ menu: 'project-menu-' + project.id, fixed: false }}>
-			<a href="#!" class="btn-gig-menu hint--top absolute  text-black " data-hint="Gig Actions"
-				><svg
+	<div class="card-actions justify-end mr-4 ">
+		<div class="dropdown dropdown-bottom cursor-pointer">
+			<label tabindex="0" class="cursor-pointer">
+				<svg
 					class="text-black"
 					xmlns="http://www.w3.org/2000/svg"
 					width="23"
@@ -39,15 +38,18 @@
 						fill="#C6C6C6"
 						d="M5 0c2.8 0 5 2.2 5 5s-2.2 5-5 5-5-2.2-5-5 2.2-5 5-5zm16 0c2.8 0 5 2.2 5 5s-2.2 5-5 5-5-2.2-5-5 2.2-5 5-5zm16 0c2.8 0 5 2.2 5 5s-2.2 5-5 5-5-2.2-5-5 2.2-5 5-5z"
 					/></svg
-				></a
-			>
-		</button>
+				>
+			</label>
+			<ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
+				<li><a href={'projects/' + project.id + '/edit'}>Edit</a></li>
+				<li><a href="">Preview</a></li>
+			</ul>
+		</div>
 	</div>
 
-	<div class="menu-tl hidden p-4 h-14 card" data-menu={'project-menu-' + project.id}>
+	<!-- <div class="menu-tl hidden p-4 h-14 card" data-menu={'project-menu-' + project.id}>
 		<ul class="bg-white p-4 rounded-md ">
-			<li><a href={'projects/' + project.id + '/edit'}>Edit</a></li>
-			<li>Preview</li>
+		
 		</ul>
-	</div>
+	</div> -->
 </div>

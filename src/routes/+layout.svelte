@@ -51,6 +51,9 @@
 							<button>Logout</button>
 						</form>
 					</li>
+					<li>
+						<a href="/settings">Settings</a>
+					</li>
 				</ul>
 			</div>
 		</span>
