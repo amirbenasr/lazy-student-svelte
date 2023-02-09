@@ -7,7 +7,7 @@
 	import Footer from '$lib/components/footer.svelte';
 </script>
 
-<div class="navbar flex p-1">
+<nav class="navbar flex p-1 bg-base-200">
 	<div class="flex-1">
 		<a class="btn btn-ghost normal-case text-xl" href="/">Lazy-Student</a>
 	</div>
@@ -55,10 +55,10 @@
 			</div>
 		</span>
 	{/if}
-</div>
+</nav>
 <!-- Router Slot -->
 <hr />
-<div class="w-3/4 mx-auto p-4">
+<div class="w-3/4 mx-auto p-4 ">
 	<slot />
 </div>
 <hr />

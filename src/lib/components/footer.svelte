@@ -1,5 +1,5 @@
 <footer>
-	<div class="flex flex-col">
+	<div class="flex flex-col bg-base-200">
 		<div class="flex space-x-4 p-8">
 			<!-- <div class="logo-header">Logo of website Links to other platforms</div> -->
 			<div class="flex flex-grow justify-around footer-groups">

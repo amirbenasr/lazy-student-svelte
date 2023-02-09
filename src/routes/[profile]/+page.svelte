@@ -7,6 +7,7 @@
 	const { publicProfile, profile } = data;
 
 	let selected: Boolean = true;
+	let editing: Boolean = false;
 
 	function selectOption(e: Event) {
 		selected = !selected;
@@ -23,12 +24,12 @@
 	}
 </script>
 
-<div class="flex justify-between border-2 space-x-20 bg-gray-200">
-	<section class="w-1/2 border-2 border-cyan-500 pt-5 divide-y-2 p-3 m-0 space-y-5">
-		<form method="POST" action="?/update">
-			<div id="profile-header" class="relative">
+<div class="flex justify-between  space-x-20 ">
+	<section class="w-1/2 border-2  y rounded-xl border-primary pt-5 divide-y-2 p-3 m-0 space-y-5 ">
+		<form method="POST" action="?/update" enctype="multipart/form-data">
+			<div id="profile-header" class="relative p-4">
 				<div
-					class="border-2 border-green-600 rounded-2xl absolute top-0 right-0 m-1 pl-1 pr-1 text-green-500 font-medium"
+					class="border-2 border-green-600 rounded-xl absolute top-0 right-0 m-1 pl-1 pr-1 text-green-500 font-medium"
 					id="badge"
 				>
 					· Online
@@ -65,20 +66,45 @@
 					<span class="font-semibold text-xl"
 						>{publicProfile.fname + ' ' + publicProfile.lname}</span
 					>
+					<span class="font-light">{publicProfile.user.username}</span>
 				</div>
 			</div>
-			<div id="profile-details">
-				<div id="from" class="flex justify-between p-2">
-					<p class="font-light">From</p>
-					<p class="font-medium">Tunisia</p>
+
+			{#if !editing}
+				<div id="profile-details">
+					<div class="text-base font-semibold p-2">{publicProfile.bio}</div>
+					<div id="from" class="flex justify-between p-2">
+						<p class="font-light">From</p>
+						<p class="font-medium">Tunisia</p>
+					</div>
+					<div id="since" class="flex justify-between p-2">
+						<p class="font-light">Member Since</p>
+						<p class="font-medium">{formatReadableDate(profile.createdAt)}</p>
+					</div>
 				</div>
-				<div id="since" class="flex justify-between p-2">
-					<p class="font-light">Member Since</p>
-					<p class="font-medium">{formatReadableDate(profile.createdAt)}</p>
+				<button type="submit" on:click={() => (editing = true)} class="btn w-full btn-sm"
+					>Edit profile</button
+				>
+			{:else}
+				<div class="xl:input-group ">
+					<div class="">
+						<label for="lname" class="label-text">Last name</label>
+						<input type="text" name="lname" id="lname" value={publicProfile.lname} />
+					</div>
+					<div class="">
+						<label for="fname" class="label-text">First name</label>
+						<input type="text" name="fname" id="fname" value={publicProfile.fname} />
+					</div>
 				</div>
-			</div>
-			{#if avatar != undefined}
-				<button type="submit" class="btn  w-full">Update</button>
+				<div class="bio">
+					<label for="bio" class="label block">Bio</label>
+					<textarea class="textarea w-full " value={publicProfile.bio} name="bio" id="bio" />
+				</div>
+
+				<div class="flex justify-start space-x-4 p-2">
+					<button class="btn btn-xs btn-primary">Confirm</button>
+					<button class="btn btn-xs " on:click={() => (editing = false)}>Cancel</button>
+				</div>
 			{/if}
 		</form>
 	</section>

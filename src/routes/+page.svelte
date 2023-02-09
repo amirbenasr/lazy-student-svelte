@@ -7,10 +7,9 @@
 	import { onMount } from 'svelte';
 	import Tech from '$lib/components/tech.svelte';
 
-	import { technologies } from '$lib/types/technology.type.ts';
+	import { technologies } from '$lib/types/technology.type';
 	export let data: PageData;
 	let profile = data.profile;
-	let id = data?.id;
 	const checkLogin = () => {
 		if (!profile) {
 			goto('/login');
@@ -57,7 +56,7 @@
 
 {#if $page.data.profile}
 	<section class="flex flex-col max  items-center xl:items-start space-y-4">
-		<p class="text-xl text-justify text-info-content font-normal">
+		<p class="text-xl text-justify  font-normal">
 			Welcome dear <span class="text-xl font-medium">{$page.data.profile.user.username}</span>,
 			<br />
 			this is the main feed where you can see all of your projects created here. <br /> You currently

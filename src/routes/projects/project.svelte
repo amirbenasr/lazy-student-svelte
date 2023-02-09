@@ -10,7 +10,7 @@
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<div class="card  bg-slate-100 w-60  p-4 m-4 relative shadow-xl cursor-pointer">
+<div class="card bg-base-300 bg-gradient-to-tr   w-60  p-4 m-4 relative shadow-xl cursor-pointer">
 	<h2 class="card-title ">{project.name}</h2>
 	<h3 class="pt-1 pb-3">Mobile app</h3>
 	<p class="m-0 p-0">
