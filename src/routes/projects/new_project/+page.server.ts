@@ -1,5 +1,5 @@
 import type { Project } from '$lib/types/project.type';
-import { redirect, type Actions } from '@sveltejs/kit';
+import type { Actions } from '@sveltejs/kit';
 import z from 'zod';
 const projectSchema = z.object({
 	name: z
@@ -43,20 +43,8 @@ export const actions: Actions = {
 				errors
 			};
 		}
-
-		const response = await fetch('http://localhost:3000/projects/create', {
-			method: 'POST',
-			body: JSON.stringify(project),
-			credentials: 'include',
-			headers: {
-				'Content-type': 'application/json'
-			}
-		});
-
-		const body = await response.json();
-
-		if (body.success) {
-			throw redirect(301, '/projects');
-		}
+		return {
+			project
+		};
 	}
 };

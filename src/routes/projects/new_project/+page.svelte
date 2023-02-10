@@ -3,8 +3,9 @@
 	import type { ActionData } from './$types';
 
 	import { ProjectTech } from '$lib/utils/utils';
-	import { onMount, tick } from 'svelte';
-	import toast, { Toaster } from 'svelte-french-toast';
+	import toast from 'svelte-french-toast';
+	import type { Project } from '$lib/types/project.type';
+	import { goto } from '$app/navigation';
 
 	export let form: ActionData;
 
@@ -31,19 +32,56 @@
 	let categoryElement: HTMLElement;
 	let pagesElement: HTMLElement;
 
+	const createProject = async (project: Project): Promise<any> => {
+		const response = await fetch('http://localhost:3000/projects/create', {
+			method: 'POST',
+			body: JSON.stringify(project),
+			credentials: 'include',
+			headers: {
+				'Content-type': 'application/json'
+			}
+		});
+
+		const body = await response.json();
+
+		return new Promise((resolve, reject) => {
+			if (body.success) {
+				console.log(JSON.stringify(body));
+				resolve(200);
+			} else {
+				reject();
+			}
+		});
+	};
+
+	async function delay(ms: number, cb: any): Promise<any> {
+		const promise1 = new Promise((resolve) => setTimeout(resolve, 3000));
+		await promise1
+			.then((_) => {
+				console.log('waiting 3 seconds untile execution');
+				return cb;
+				// return _;
+			})
+			.then((val) => {
+				return val();
+			})
+			.then((val) => {
+				console.log('value returned from above promise' + val);
+				goto('/projects');
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	}
+
 	function updateTitle(
 		event: KeyboardEvent & { currentTarget: EventTarget & HTMLTextAreaElement }
 	): any {
-		console.log(event.currentTarget.value);
 		const value = event.currentTarget.value;
 		titleLength = value;
 	}
 	const scrollToBottom = async (node: HTMLElement) => {
 		node.scrollIntoView({ behavior: 'smooth', block: 'start' });
-	};
-
-	const delay = (ms: number) => {
-		return new Promise((resolve) => setTimeout(resolve, ms));
 	};
 </script>
 
@@ -52,19 +90,25 @@
 	method="POST"
 	use:enhance={({ data, cancel, action, controller }) => {
 		return async ({ update, action, result }) => {
-			toast.promise(delay(3000), {
-				loading: 'Creating Project...',
-				success: 'Project created!',
-				error: 'Could not create project.'
-			});
+			console.log(result);
 
-			// const { errors, project } = result.data;
-			// if (errors.name) {
-			// 	scrollToBottom(textElement);
-			// }
-			// if (errors.category || errors.technology) {
-			// 	scrollToBottom(categoryElement);
-			// }
+			const { project } = result.data;
+
+			if (!result?.data?.errors) {
+				toast.promise(
+					delay(3000, () => createProject(project)),
+					{
+						loading: 'Creating Project...',
+						success: 'Project created!',
+						error: 'Could not create project.'
+					}
+				);
+			}
+			if (result?.data?.errors?.name) {
+				scrollToBottom(textElement);
+			} else if (result?.data?.errors?.category || result?.data?.errors?.technology) {
+				scrollToBottom(categoryElement);
+			}
 
 			update({ reset: false });
 		};
@@ -72,7 +116,10 @@
 >
 	<div class="border m-auto p-4   relative shadow-md box-content  space-y-4  ">
 		<!-- Title Section -->
-		<div class="project-title-section  flex  flex-row  sm:space-x-24 border p-4 w-full">
+		<div
+			bind:this={textElement}
+			class="project-title-section  flex  flex-row  sm:space-x-24 border p-4 w-full"
+		>
 			<div class="text flex flex-col w-32 max-w-sm">
 				<span class="flex-shrink-0 text-2xl">Title</span>
 				<span
@@ -80,7 +127,7 @@
 					working on it</span
 				>
 			</div>
-			<div bind:this={textElement} class="flex-grow relative  inline-block align-baseline m-0 p-0 ">
+			<div class="flex-grow relative  inline-block align-baseline m-0 p-0 ">
 				<span class="absolute top-0  z-10 left-2">This project is about</span>
 				<textarea
 					cols="2"
@@ -111,7 +158,7 @@
 						bind:this={categoryElement}
 						name="type"
 						id="project"
-						class="select {form?.errors.type ? 'select-error' : ''}   max-w-md"
+						class="select {form?.errors?.type ? 'select-error' : ''}   max-w-md"
 						on:change={changeValue}
 						value={form?.project.type ?? ''}
 					>
@@ -123,7 +170,7 @@
 						<option value="BACKEND">Backend</option>
 						<option value="FULLSTACK">Fullstack</option>
 					</select>
-					{#if form?.errors.type}
+					{#if form?.errors?.type}
 						<span class="label-text text-error"> {form.errors.type[0]} </span>
 					{/if}
 					<small class="italic break block break-words ">
@@ -136,7 +183,7 @@
 					<select
 						name="technology"
 						id="project-tech"
-						class="select {form?.errors.technology ? 'select-error' : ''} max-w-md "
+						class="select {form?.errors?.technology ? 'select-error' : ''} max-w-md "
 						value={form?.project?.technology ?? ''}
 					>
 						<option value="" disabled selected>Select Technology</option>
@@ -145,7 +192,7 @@
 						{/each}
 					</select>
 
-					{#if form?.errors.technology}
+					{#if form?.errors?.technology}
 						<span class="label-text text-error">
 							{form.errors.technology[0]}
 						</span>
