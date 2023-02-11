@@ -1,5 +1,5 @@
 <script type="ts">
-	import { enhance } from '$app/forms';
+	import { enhance, type SubmitFunction } from '$app/forms';
 	import type { ActionData } from './$types';
 
 	import { ProjectTech } from '$lib/utils/utils';
@@ -83,12 +83,8 @@
 	const scrollToBottom = async (node: HTMLElement) => {
 		node.scrollIntoView({ behavior: 'smooth', block: 'start' });
 	};
-</script>
 
-<form
-	action="?/create"
-	method="POST"
-	use:enhance={({ data, cancel, action, controller }) => {
+	const submitFunction: SubmitFunction = async ({ action, cancel, controller, data, form }) => {
 		return async ({ update, action, result }) => {
 			console.log(result);
 
@@ -112,8 +108,10 @@
 
 			update({ reset: false });
 		};
-	}}
->
+	};
+</script>
+
+<form action="?/create" method="POST" use:enhance={submitFunction}>
 	<div class="border m-auto p-4   relative shadow-md box-content  space-y-4  ">
 		<!-- Title Section -->
 		<div

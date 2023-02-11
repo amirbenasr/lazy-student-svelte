@@ -1,11 +1,14 @@
 <script type="ts">
-	import type { PageData } from './$types';
+	import type { LayoutData, LayoutServerData } from '../$types';
+	import type { PageData, PageServerData } from './$types';
 
-	export let data: PageData;
+	export let data: LayoutServerData;
 
-	const { profile, projectDetails } = data;
+	const { projectDetails } = data;
 </script>
 
 <div class="prose">
 	<h3>Editing project</h3>
+
+	<p>{JSON.stringify(projectDetails)}</p>
 </div>
