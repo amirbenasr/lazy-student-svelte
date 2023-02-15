@@ -6,26 +6,23 @@
 	var projects = data.projects;
 	var filtered = [...projects];
 
-	function filterProjects(filter: string) {
-		if (!filter) {
+	const filterProjects = (e: Event) => {
+		const element = e.target as HTMLSelectElement;
+		const filtertype = element.value.toUpperCase();
+
+		if (!filtertype) {
 			filtered = [...projects];
 			return;
 		}
-		filtered = projects.filter((val) => val.type == filter);
-	}
+		filtered = projects.filter((val) => val.type == filtertype);
+	};
 </script>
 
 <div class="flex flex-col">
 	<h1 class="p-4 text-xl font-bold">Your Projects</h1>
 	<div class="flex justify-around items-center">
 		<h2 class="pl-4">You have {projects.length} projects</h2>
-		<select
-			class="select  select-bordered select-md"
-			on:change={(e) => {
-				const filter = e.target.value.toUpperCase();
-				filterProjects(filter);
-			}}
-		>
+		<select class="select  select-bordered select-md" on:change={filterProjects}>
 			<option selected value="">All</option>
 			<option value="web">Web</option>
 			<option value="mobile">Mobile</option>
