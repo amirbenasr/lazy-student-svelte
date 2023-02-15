@@ -10,9 +10,9 @@
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<div class="card bg-base-300 bg-gradient-to-tr   w-60  p-4 m-4 relative shadow-xl cursor-pointer">
+<div class="card bg-base-300    w-60  p-4 m-4 relative shadow-xl cursor-pointer">
 	<h2 class="card-title ">{project.name}</h2>
-	<h3 class="pt-1 pb-3">Mobile app</h3>
+	<h3 class="pt-1 pb-3">{project.type} APP</h3>
 	<p class="m-0 p-0">
 		Deadline: {format(Date.parse(project.deadline.toString()), 'yyyy-MM-dd hh:mm')}
 	</p>
@@ -25,7 +25,7 @@
 		{formatRelative(new Date(), Date.parse(project.deadline.toString()))}
 	</div>
 	<!-- <Datetimer id={project.id} date={Date.parse(project.deadline.toString())} /> -->
-	<div class="card-actions justify-end mr-4 ">
+	<div class="   ">
 		<div class="dropdown dropdown-bottom ">
 			<label tabindex="0" class="cursor-pointer">
 				<svg
@@ -46,10 +46,4 @@
 			</ul>
 		</div>
 	</div>
-
-	<!-- <div class="menu-tl hidden p-4 h-14 card" data-menu={'project-menu-' + project.id}>
-		<ul class="bg-white p-4 rounded-md ">
-		
-		</ul>
-	</div> -->
 </div>

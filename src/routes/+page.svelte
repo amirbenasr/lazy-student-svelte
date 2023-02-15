@@ -20,7 +20,24 @@
 </script>
 
 {#if !$page.data.profile}
-	<div class="prose mx-auto card  shadow-xl text-center m-4">
+	<div
+		class="hero h-[600px]"
+		style="background-image: url('https://media.istockphoto.com/id/494587588/photo/teacher-helping-a-trouble-teenager.jpg?s=612x612&w=0&k=20&c=E8DfAbG5Q5R2EVltLX8quIVlHOjGMZ2vUW6CtXri2j8=');"
+	>
+		<div class="hero-overlay bg-opacity-60" />
+		<div class="hero-content text-center text-neutral-content">
+			<div class="max-w-md">
+				<h1 class="mb-5 text-5xl font-bold">Get your academic project done in Time</h1>
+				<p class="mb-5">
+					We are here to help you finish your academic project, assignment or whatever you are
+					passing.. We need you to focus on other subjects, and leave us the room to make the work
+					for you
+				</p>
+				<button class="btn btn-primary">Get Started</button>
+			</div>
+		</div>
+	</div>
+	<!-- <div class="prose mx-auto card  shadow-xl text-center m-4">
 		<figure class="m-0">
 			<img
 				src="https://media.istockphoto.com/id/494587588/photo/teacher-helping-a-trouble-teenager.jpg?s=612x612&w=0&k=20&c=E8DfAbG5Q5R2EVltLX8quIVlHOjGMZ2vUW6CtXri2j8="
@@ -40,7 +57,7 @@
 				<button class="btn btn-info" on:click={checkLogin}>How does it work?</button>
 			</div>
 		</div>
-	</div>
+	</div> -->
 	<div class="divider" />
 	<div class="prose max-w-none w-full ">
 		<h1>Academic Projects that we support</h1>

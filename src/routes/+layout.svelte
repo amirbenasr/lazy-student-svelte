@@ -6,70 +6,112 @@
 	import '../app.postcss';
 	import { page } from '$app/stores';
 	import Footer from '$lib/components/footer.svelte';
+	import { onMount } from 'svelte';
+	import { browser } from '$app/environment';
+	import { writable } from 'svelte/store';
+
+	const scrolled = writable(false);
+
+	onMount(() => {
+		$scrolled = false;
+		window.addEventListener('scroll', function () {
+			const val = this.scrollY;
+			if (val != 0) {
+				$scrolled = true;
+			} else {
+				$scrolled = false;
+			}
+		});
+	});
 </script>
 
-<Toaster />
+<!-- <Toaster /> -->
 
-<nav class="navbar flex p-1 bg-base-200">
-	<div class="flex-1">
-		<a class="btn btn-ghost normal-case text-xl" href="/">Lazy-Student</a>
-	</div>
-
-	{#if !$page.data.profile}
-		<div class="btn btn-secondary  ">
-			<a href="/signup">Sign up</a>
-		</div>
-		<div class="ml-2 btn btn-outline">
-			<a href="/login">Login</a>
-		</div>
-	{/if}
+<div class="relative h-screen w-screen">
 	{#if $page.data.profile}
-		<span class="relative">
-			<!-- Trigger: apply the 'use:menu' action and supply the unique menu ID -->
-
-			<!-- Menu: set a matching 'data-menu-[menuId]' attribute -->
-			<div class="dropdown dropdown-end">
-				<label tabindex="0">
-					<div class="avatar  online cursor-pointer">
-						<div class="w-12 rounded-full">
-							<img src={$page.data.profile.avatar} class="w-24 h-24" />
-						</div>
-					</div>
-				</label>
-
-				<ul
-					tabindex="0"
-					class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 divide-y-2"
-				>
-					<li>
-						<a href="/{$page.data.profile.user?.username ?? ''}" class="justify-between">
-							Profile
-						</a>
-					</li>
-					<li>
-						<a href="/projects" class="justify-between"> Projects </a>
-					</li>
-					<li>
-						<form method="post" action="/logout?/logout">
-							<button>Logout</button>
-						</form>
-					</li>
-					<li>
-						<a href="/settings">Settings</a>
-					</li>
-				</ul>
+		<nav class=" p-6 navbar flex  bg-white border-b-2  ">
+			<div class="flex-1">
+				<a class=" " href="/">Lazy-Student</a>
 			</div>
-		</span>
-	{/if}
-</nav>
-<!-- Router Slot -->
-<hr />
-<div class="w-3/4 mx-auto p-4 ">
-	<slot />
-</div>
-<hr />
 
-<!-- <footer class="footer p-4 bg-base-100 text-base-content">
-	<div class="footer-title">Copyright © 2023 - All right reserved by LS-Co. Ltd</div>
-</footer> -->
-<Footer />
+			<span class="relative">
+				<!-- Trigger: apply the 'use:menu' action and supply the unique menu ID -->
+
+				<!-- Menu: set a matching 'data-menu-[menuId]' attribute -->
+				<div class="dropdown dropdown-end">
+					<label tabindex="0">
+						<div class="avatar  online cursor-pointer">
+							<div class="w-12 rounded-full">
+								<img src={$page.data.profile.avatar} class="w-24 h-24" />
+							</div>
+						</div>
+					</label>
+
+					<ul
+						tabindex="0"
+						class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 divide-y-2"
+					>
+						<li>
+							<a href="/{$page.data.profile.user?.username ?? ''}" class="justify-between">
+								Profile
+							</a>
+						</li>
+						<li>
+							<a href="/projects" class="justify-between"> Projects </a>
+						</li>
+						<li>
+							<form method="post" action="/logout?/logout">
+								<button>Logout</button>
+							</form>
+						</li>
+						<li>
+							<a href="/settings">Settings</a>
+						</li>
+					</ul>
+				</div>
+			</span>
+		</nav>
+	{:else if $page.route.id == '/'}
+		<nav
+			class="transition-all duration-200 {$scrolled
+				? 'bg-white opacity-95'
+				: 'bg-transparent'}   ease-in  p-8  fixed navbar flex  z-50 "
+		>
+			<div class="pl-0 pr-0 m-auto flex w-screen  justify-between ">
+				<div class="flex ">
+					<a class=" text-{$scrolled ? 'black' : 'white'}  font-medium" href="/">Lazy-Student</a>
+				</div>
+
+				<div class="flex ">
+					<ul class="flex space-x-8 ">
+						<li class="text-{$scrolled ? 'black' : 'white'}  font-medium ">
+							<a href="/login">Sign-in</a>
+						</li>
+						<li class="text-{$scrolled ? 'black' : 'white'} font-medium ">
+							<a href="/signup">Join</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	{:else}
+		<nav class=" p-6 navbar flex  ">
+			<div class="flex-1">
+				<a class="  font-medium" href="/">Lazy-Student</a>
+			</div>
+
+			<ul class="space-x-8 ">
+				<li class=" font-medium "><a href="/login">Sign-in</a></li>
+				<li class=" font-medium "><a href="/signup">Join</a></li>
+			</ul>
+		</nav>
+	{/if}
+	<!-- Router Slot -->
+	<hr />
+	<div class="m-auto">
+		<slot />
+	</div>
+	<hr />
+
+	<Footer />
+</div>
