@@ -25,9 +25,14 @@
 	});
 </script>
 
-<!-- <Toaster /> -->
+<Toaster />
 
 <div class="relative h-screen w-screen">
+	{#if $page.url.searchParams.get('verification') === 'true'}
+		<div class="flex h-12  bg-primary text-white font-semibold justify-center items-center">
+			<p class="">your email has been verified successfully!</p>
+		</div>
+	{/if}
 	{#if $page.data.profile}
 		<nav class=" p-6 navbar flex  bg-white border-b-2  ">
 			<div class="flex-1">
