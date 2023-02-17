@@ -28,6 +28,7 @@
 <Toaster />
 
 <div class="relative h-screen w-screen">
+	<!-- Add verification banner at the top  -->
 	{#if $page.url.searchParams.get('verification') === 'true'}
 		<div class="flex h-12  bg-primary text-white font-semibold justify-center items-center">
 			<p class="">your email has been verified successfully!</p>

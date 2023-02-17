@@ -7,11 +7,18 @@
 	let emailError: any;
 	const emailSchema = z.string().email();
 
-	const submitFunction: SubmitFunction = async ({ data, cancel }) => {
+	const submitFunction: SubmitFunction = async ({ data, cancel, action }) => {
 		const { email } = Object.fromEntries(data);
 
 		try {
-			emailSchema.parse(email);
+			let xx = emailSchema.parse(email);
+			fetch('http://localhost:3000/users/forget', {
+				method: 'POST',
+				headers: {
+					'Content-type': 'application/json'
+				},
+				body: JSON.stringify({ email: xx })
+			});
 			emailError = null;
 			toast.success('A reset link has been sent to your email ');
 		} catch (error) {

@@ -7,7 +7,7 @@ const getUserAvatar = (profile: any): string => {
 	if (profile.avatar === 'monkey') {
 		return config['media-url'] + 'default/' + 'monkey.jpg';
 	}
-	return config['media-url'] + profile.id + '/profile.png';
+	return config['media-url'] + profile.userId + '/profile.png';
 };
 export const handle: Handle = async ({ event, resolve }) => {
 	event.setHeaders({

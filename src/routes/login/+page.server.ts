@@ -20,7 +20,7 @@ export const load: ServerLoad = async ({ cookies }) => {
 
 export const actions: Actions = {
 	reset: async ({}) => {
-		throw redirect(300, '/');
+		// throw redirect(300, '/');
 	},
 	login: async ({ cookies, locals, request }) => {
 		const data = await Object.fromEntries(await request.formData());
