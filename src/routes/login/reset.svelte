@@ -3,6 +3,7 @@
 	import toast from 'svelte-french-toast';
 	import type { ActionData } from '../$types';
 	import z from 'zod';
+	import { browser } from '$app/environment';
 	export let RESET;
 	let emailError: any;
 	const emailSchema = z.string().email();
@@ -12,7 +13,7 @@
 
 		try {
 			let xx = emailSchema.parse(email);
-			fetch('http://localhost:3000/users/forget', {
+			const result = await fetch('http://localhost:3000/users/forget', {
 				method: 'POST',
 				headers: {
 					'Content-type': 'application/json'
@@ -20,7 +21,12 @@
 				body: JSON.stringify({ email: xx })
 			});
 			emailError = null;
-			toast.success('A reset link has been sent to your email ');
+			const body = await result.json();
+			if (body.status != 200) {
+				toast.error('Something went wrong!,try again');
+			} else {
+				toast.success('A reset link has been sent to your email ');
+			}
 		} catch (error) {
 			emailError = error;
 			cancel();

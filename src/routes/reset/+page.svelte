@@ -1,15 +1,29 @@
 <script type="ts">
 	import { enhance, type SubmitFunction } from '$app/forms';
-	import { goto } from '$app/navigation';
-	import { redirect } from '@sveltejs/kit';
+	import { page } from '$app/stores';
 	import toast from 'svelte-french-toast';
 	import type { ActionData } from './$types';
 
 	export let form: ActionData;
 
 	const resetFunction: SubmitFunction = ({ action, cancel, controller, data, form }) => {
-		return ({ action, form, result, update }) => {
-			console.log(result);
+		let { password } = Object.fromEntries(data) as { password: string };
+
+		const token = $page.url.searchParams.get('it');
+		return async ({ action, form, result, update }) => {
+			console.log(token);
+
+			if (!token) {
+				toast.error('Invalid request!');
+			}
+
+			const tx = await fetch('http://localhost:3000/users/verify', {
+				headers: {
+					'Content-type': 'application/json'
+				},
+				method: 'POST',
+				body: JSON.stringify({ password, token: token })
+			});
 
 			if (!result?.data?.errors) {
 				toast.success('Your password has been reset successfully!');

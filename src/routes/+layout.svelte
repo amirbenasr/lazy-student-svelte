@@ -30,12 +30,15 @@
 <div class="relative h-screen w-screen">
 	<!-- Add verification banner at the top  -->
 	{#if $page.url.searchParams.get('verification') === 'true'}
-		<div class="flex h-12  bg-primary text-white font-semibold justify-center items-center">
+		<div
+			id="banner"
+			class="sticky top-0 z-40 flex h-12  bg-primary text-white font-semibold justify-center items-center  "
+		>
 			<p class="">your email has been verified successfully!</p>
 		</div>
 	{/if}
 	{#if $page.data.profile}
-		<nav class=" p-6 navbar flex  bg-white border-b-2  ">
+		<nav class="p-6 navbar flex bg-white border-b-2">
 			<div class="flex-1">
 				<a class=" " href="/">Lazy-Student</a>
 			</div>

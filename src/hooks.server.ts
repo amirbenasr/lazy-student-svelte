@@ -1,4 +1,4 @@
-import { verifyToken } from '$lib/utils/others';
+import { verifyToken } from '$lib/utils/others.server';
 import type { Handle } from '@sveltejs/kit';
 import { createLogger } from 'vite';
 import { config } from '$lib/utils/config';
