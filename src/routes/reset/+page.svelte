@@ -1,5 +1,7 @@
 <script type="ts">
 	import { enhance, type SubmitFunction } from '$app/forms';
+	import { afterNavigate } from '$app/navigation';
+	import { base } from '$app/paths';
 	import { page } from '$app/stores';
 	import toast from 'svelte-french-toast';
 	import type { ActionData } from './$types';

@@ -9,6 +9,7 @@
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
 	import { writable } from 'svelte/store';
+	import { base } from '$app/paths';
 
 	const scrolled = writable(false);
 
@@ -38,6 +39,10 @@
 		</div>
 	{/if}
 	{#if $page.data.profile}
+		<!--login banner  -->
+		<!-- <div class="banner h-12 bg-green-500 text-center flex justify-center items-center ">
+			<p class="text-white font-semibold">You are already logged in!</p>
+		</div> -->
 		<nav class="p-6 navbar flex bg-white border-b-2">
 			<div class="flex-1">
 				<a class=" " href="/">Lazy-Student</a>
@@ -117,7 +122,7 @@
 	{/if}
 	<!-- Router Slot -->
 	<hr />
-	<div class="m-auto">
+	<div class="mx-auto">
 		<slot />
 	</div>
 	<hr />

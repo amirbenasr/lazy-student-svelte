@@ -1,4 +1,4 @@
-import type { Actions } from '@sveltejs/kit';
+import { fail, redirect, type Actions } from '@sveltejs/kit';
 import { z } from 'zod';
 import type { string } from 'zod/lib';
 
@@ -53,6 +53,12 @@ export const actions: Actions = {
 				'Content-type': 'application/json'
 			}
 		});
-		console.log(await res.json());
+		const body = await res.json();
+
+		if (body.success) {
+			throw redirect(300, '/login');
+		} else {
+			return fail(401, { error: body.message });
+		}
 	}
 };

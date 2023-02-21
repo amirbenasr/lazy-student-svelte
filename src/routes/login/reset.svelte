@@ -22,10 +22,13 @@
 			});
 			emailError = null;
 			const body = await result.json();
-			if (body.status != 200) {
-				toast.error('Something went wrong!,try again');
+			console.log(body);
+
+			if (!body.success) {
+				toast.error('Something went wrong!');
 			} else {
 				toast.success('A reset link has been sent to your email ');
+				RESET = false;
 			}
 		} catch (error) {
 			emailError = error;

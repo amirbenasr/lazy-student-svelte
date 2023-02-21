@@ -1,8 +1,13 @@
 import type { Actions, PageServerLoad } from '../$types';
 import z from 'zod';
 import { redirect } from '@sveltejs/kit';
-export const load: PageServerLoad = async ({ fetch, url }) => {
+export const load: PageServerLoad = async ({ fetch, url, locals }) => {
 	const params = url.searchParams;
+	if (locals.profile) {
+		console.log('we have locals');
+
+		// throw redirect(301, '/');
+	}
 
 	console.log(params);
 };

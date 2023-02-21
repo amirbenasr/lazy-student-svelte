@@ -1,13 +1,6 @@
-import { type Cookies, type Actions, redirect, fail } from '@sveltejs/kit';
-import type { User } from '$lib/types/user.type';
-import { user } from '$lib/stores/userStore';
-import { goto } from '$app/navigation';
-import { browser } from '$app/environment';
+import { type Actions, redirect } from '@sveltejs/kit';
 import type { ServerLoad } from '@sveltejs/kit/types/internal';
 import { z } from 'zod';
-import type { string, ZodError } from 'zod/lib';
-import toast from 'svelte-french-toast';
-
 const loginSchema = z.object({
 	email: z.string().email(),
 	password: z.string({ required_error: "Password can't be blank" }).min(5).max(64)

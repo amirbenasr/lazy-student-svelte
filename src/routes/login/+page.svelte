@@ -63,7 +63,7 @@
 							>{form?.errors?.password[0] ?? ''}</span
 						>
 					{/if}
-					{#if form?.wrong_password}<span class="text-sm font-extralight text-red-500 text-left"
+					{#if form?.wrong_password}<span class="label-text-alt text-error m-2"
 							>Check your credentials</span
 						>
 					{/if}

@@ -1,5 +1,8 @@
 <script type="ts">
+	import { browser } from '$app/environment';
+	import { base } from '$app/paths';
 	import { formatGenericDate, formatReadableDate } from '$lib/utils/utils';
+	import { onMount } from 'svelte';
 	import type { PageData, PageServerData } from './$types';
 
 	export let data: PageServerData;
@@ -8,7 +11,6 @@
 
 	let selected: Boolean = true;
 	let editing: Boolean = false;
-
 	function selectOption(e: Event) {
 		selected = !selected;
 	}
@@ -98,7 +100,7 @@
 				</div>
 				<div class="bio">
 					<label for="bio" class="label block">Bio</label>
-					<textarea class="textarea w-full " value={publicProfile.bio} name="bio" id="bio" />
+					<textarea class="textarea-ghost w-full " value={publicProfile.bio} name="bio" id="bio" />
 				</div>
 
 				<div class="flex justify-start space-x-4 p-2">

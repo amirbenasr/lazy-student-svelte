@@ -11,7 +11,7 @@
 
 	let selectValue = 'WEB';
 	let numberOfPages = 1;
-	let totalPrice = 5;
+	let totalPrice = 50;
 	let date = new Date(new Date().getTime() + 60 * 60 * 24 * 1000).toISOString().slice(0, 10);
 	export let choice: string = 'WEB';
 
@@ -86,25 +86,24 @@
 
 	const submitFunction: SubmitFunction = async ({ action, cancel, controller, data, form }) => {
 		return async ({ update, action, result }) => {
-			console.log(result);
-
 			const { project } = result.data;
-
-			if (!result?.data?.errors) {
-				toast.promise(
-					delay(3000, () => createProject(project)),
-					{
-						loading: 'Creating Project...',
-						success: 'Project created!',
-						error: 'Could not create project.'
-					}
-				);
-			}
-			if (result?.data?.errors?.name) {
-				scrollToBottom(textElement);
-			} else if (result?.data?.errors?.category || result?.data?.errors?.technology) {
-				scrollToBottom(categoryElement);
-			}
+			if ('data' in result)
+				if (!result?.data?.errors) {
+					toast.promise(
+						delay(3000, () => createProject(project)),
+						{
+							loading: 'Creating Project...',
+							success: 'Project created!',
+							error: 'Could not create project.'
+						}
+					);
+				}
+			if ('data' in result)
+				if (result?.data?.errors?.name) {
+					scrollToBottom(textElement);
+				} else if (result?.data?.errors?.category || result?.data?.errors?.technology) {
+					scrollToBottom(categoryElement);
+				}
 
 			update({ reset: false });
 		};
@@ -206,7 +205,7 @@
 				<span class=" text-2xl">Deadline & Number of pages</span>
 				<span>Select Carefully your deadline,and how many pages your app requires</span>
 			</div>
-			<div class="absolute bottom-0 right-5">Price is : {totalPrice}$</div>
+			<div class="absolute bottom-0 right-5">Estimated Price is : {totalPrice}$</div>
 
 			<div id="first-section" class=" flex flex-grow-1 border-6   ">
 				<div class="flex md:space-x-4  ">

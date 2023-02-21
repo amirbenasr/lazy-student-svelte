@@ -1,11 +1,16 @@
 <script type="ts">
 	import { enhance, type SubmitFunction } from '$app/forms';
+	import toast from 'svelte-french-toast';
 	import type { ActionData } from './$types';
 
 	export let form: ActionData;
 
 	const submitFunction: SubmitFunction = async ({ action, cancel, data, form, controller }) => {
 		return async ({ action, form, result, update }) => {
+			if ((result.type = 'failure')) {
+				if ('data' in result) toast.error(result!.data?.error);
+			}
+
 			update({ reset: false });
 		};
 	};
@@ -21,9 +26,9 @@
 				type="email"
 				name="email"
 				id="email"
-				value={form?.data.email ?? ''}
+				value={form?.data?.email ?? ''}
 			/>
-			{#if form?.errors.email}
+			{#if form?.errors?.email}
 				<span class="label-text-alt text-error">{form?.errors.email[0]}</span>
 			{/if}
 			<input
@@ -45,7 +50,7 @@
 				placeholder="Password"
 				id="password"
 			/>
-			{#if form?.errors.password}
+			{#if form?.errors?.password}
 				<span class="label-text-alt text-error">{form?.errors.password[0]}</span>
 			{/if}
 			<input
@@ -56,7 +61,7 @@
 				placeholder="Confirm password"
 				id="password"
 			/>
-			{#if form?.errors.confirmpassword}
+			{#if form?.errors?.confirmpassword}
 				<span class="label-text-alt text-error">{form?.errors.confirmpassword[0]}</span>
 			{/if}
 		</div>
