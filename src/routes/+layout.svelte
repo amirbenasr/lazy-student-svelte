@@ -74,12 +74,12 @@
 							<a href="/projects" class="justify-between"> Projects </a>
 						</li>
 						<li>
+							<a href="/settings">Settings</a>
+						</li>
+						<li>
 							<form method="post" action="/logout?/logout">
 								<button>Logout</button>
 							</form>
-						</li>
-						<li>
-							<a href="/settings">Settings</a>
 						</li>
 					</ul>
 				</div>

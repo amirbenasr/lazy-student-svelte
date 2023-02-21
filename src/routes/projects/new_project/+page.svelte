@@ -125,14 +125,15 @@
 				>
 			</div>
 			<div class="flex-grow relative  inline-block align-baseline m-0 p-0 ">
-				<span class="absolute top-0  z-10 left-2">This project is about</span>
+				<p class="absolute top-0   z-10 left-2 font-serif translate-y-0  ">This project is about</p>
 				<textarea
 					cols="2"
 					rows="2"
-					class="w-full h-24 input pl-3  m-0 p-0 indent-36 shadow-md   align-baseline "
+					class="textarea-bordered -translate-y-[1px] font-serif w-full font-black h-24 input  self-baseline  p-0 pl-2  indent-[147px] shadow-md   "
 					name="name"
 					maxlength="80"
 					on:keyup={updateTitle}
+					placeholder="is about creating a ..."
 					value={form?.project.name ?? ''}
 				/>
 				<div class="flex justify-between">
