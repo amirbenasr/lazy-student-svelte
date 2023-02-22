@@ -4,7 +4,6 @@
 	import { browser } from '$app/environment';
 	import type { PageData } from './$types';
 	import { page } from '$app/stores';
-	import { onMount } from 'svelte';
 	import Tech from '$lib/components/tech.svelte';
 
 	import { technologies } from '$lib/types/technology.type';
@@ -51,7 +50,7 @@
 	</div>
 {/if}
 
-{#if $page.data.profile}
+{#if $page.data.profile?.user?.role == 'STUDENT'}
 	<section class="p-4 flex flex-col max  items-center xl:items-start space-y-4">
 		<p class="text-xl text-justify  font-normal">
 			Welcome dear <span class="text-xl font-medium">{$page.data.profile.user.username}</span>,
@@ -62,6 +61,17 @@
 		<a href="/projects/new_project">
 			<button class="btn gap-2 m-1"> Create your project </button>
 		</a>
+	</section>
+{:else if $page.data.profile?.user?.role == 'PROFESSOR'}
+	<section class="p-4 flex flex-col max  items-center xl:items-start space-y-4">
+		<p class="text-xl text-justify  font-normal">
+			Welcome dear professor <span class="text-xl font-medium"
+				>{$page.data.profile.user.username}</span
+			>,
+			<br />
+			this is the main feed where you can see all student projects created here. <br /> There are currently
+			no projects.
+		</p>
 	</section>
 {/if}
 

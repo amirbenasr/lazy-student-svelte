@@ -16,9 +16,26 @@ declare namespace App {
 			createdAt;
 			user: {
 				username;
+				role;
 			};
 		};
 	}
-	// interface PageData {}
+	interface PageData {
+		profile: {
+			id;
+			fname;
+			lname;
+			dob;
+			country;
+			bio;
+			avatar;
+			userId;
+			createdAt;
+			user: {
+				username;
+				role;
+			};
+		};
+	}
 	// interface Platform {}
 }
