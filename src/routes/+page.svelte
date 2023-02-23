@@ -7,8 +7,10 @@
 	import Tech from '$lib/components/tech.svelte';
 
 	import { technologies } from '$lib/types/technology.type';
+	import { formatAgoDate, getUserAvatar } from '$lib/utils/utils';
 	export let data: PageData;
 	let profile = data.profile;
+	let projects = [];
 	const checkLogin = () => {
 		if (!profile) {
 			goto('/login');
@@ -16,6 +18,23 @@
 			goto('/projects');
 		}
 	};
+
+	const fetchProjects = async (order = 'asc', status = 'pending') => {
+		const response = await fetch(`http://localhost:3000/projects/feed?order=${order}`);
+		const body = await response.json().then((val: any) => {
+			return new Promise((resolve) => {
+				setTimeout(() => {
+					resolve(val);
+				}, 1000);
+			});
+		});
+		projects = body;
+
+		return projects;
+	};
+
+	let promise = fetchProjects();
+	//  fetchProjects()
 </script>
 
 {#if !$page.data.profile}
@@ -72,6 +91,59 @@
 			this is the main feed where you can see all student projects created here. <br /> There are currently
 			no projects.
 		</p>
+
+		<div class="filter-section">
+			<div class="form-control w-full max-w-xs">
+				<label for="order" class="label-text">
+					<span class="label-text">Filter by</span>
+				</label>
+				<select
+					class="select select-bordered max-w-xs"
+					id="order"
+					on:change={(e) => {
+						const order = e.target?.value;
+						promise = fetchProjects(order);
+					}}
+				>
+					<option value="asc" selected>Newest</option>
+					<option value="desc">Oldest</option>
+				</select>
+			</div>
+		</div>
+		{#await promise}
+			Loading projects
+		{:then projects}
+			<div>
+				{#each projects as project}
+					<div class="project card flex flex-col h-40 shadow-md m-4 relative">
+						<!-- <span class="badge badge-sm badge-primary absolute right-0 mb-4 mr-2"
+							>{project.status}</span
+						> -->
+
+						<div class="flex flex-row">
+							<div class="avatar flex-col item p-4 items-center">
+								<div class="w-12 rounded-full  bg-white">
+									<img src={getUserAvatar(project.createdBy.Profile)} alt="" srcset="" />
+								</div>
+
+								<span class="text-sm">{project.createdBy.username}</span>
+							</div>
+							<div class="border-left w-0.5 m-0 h-auto  divider-vertical  bg-gray-200" />
+							<div class=" p-4">
+								<p class="">{project.name}</p>
+								<p class="sub-title text-sm font-light">{project.technology}</p>
+								<p class="text-xs font-light">submitted : {formatAgoDate(project.createdAt)}</p>
+							</div>
+						</div>
+						<hr />
+						<div class="flex-grow card-actions items-center  justify-end  ">
+							<a href="/projects/{project.id}" class="btn btn-xs btn-primary">View Details</a>
+							<button class="btn btn-xs">Not Interested</button>
+						</div>
+					</div>
+				{/each}
+			</div>
+		{/await}
 	</section>
 {/if}
 

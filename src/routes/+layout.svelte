@@ -122,7 +122,7 @@
 	{/if}
 	<!-- Router Slot -->
 	<hr />
-	<div class="mx-auto">
+	<div class="mx-8">
 		<slot />
 	</div>
 	<hr />

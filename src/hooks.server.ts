@@ -1,14 +1,12 @@
 import { verifyToken } from '$lib/utils/others.server';
 import type { Handle } from '@sveltejs/kit';
 import { config } from '$lib/utils/config';
+import { getUserAvatar } from '$lib/utils/utils';
 
-const getUserAvatar = (profile: any): string => {
-	if (profile.avatar === 'monkey') {
-		return config['media-url'] + 'default/' + 'monkey.jpg';
-	}
-	return config['media-url'] + profile.userId + '/profile.png';
-};
+
 export const handle: Handle = async ({ event, resolve }) => {
+	console.log("here");
+	
 	event.setHeaders({
 		credentials: 'include'
 	});
@@ -24,6 +22,10 @@ export const handle: Handle = async ({ event, resolve }) => {
 	}
 
 	if (verifyToken(token)) {
+		console.log("token is verified");
+		console.log(token);
+		
+		
 		// console.log(process.env.);
 
 		try {
@@ -31,6 +33,8 @@ export const handle: Handle = async ({ event, resolve }) => {
 				credentials: 'include'
 			});
 			const profile = await response.json();
+			console.log("undefined?",profile);
+			
 
 			event.locals.profile = profile;
 			// process userAvatar using local config

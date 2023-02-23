@@ -7,7 +7,7 @@ export const verifyToken = (token: string): Boolean => {
 	console.log('running this?');
 	console.log(HASHED_SECRET);
 
-	let verified;
+	let verified;		
 
 	try {
 		verified = V(token, HASHED_SECRET);
