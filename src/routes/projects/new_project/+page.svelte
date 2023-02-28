@@ -99,7 +99,7 @@
 					);
 				}
 			if ('data' in result)
-				if (result?.data?.errors?.name) {
+				if (result?.data?.errors?.title || result?.data?.errors?.description) {
 					scrollToBottom(textElement);
 				} else if (result?.data?.errors?.category || result?.data?.errors?.technology) {
 					scrollToBottom(categoryElement);
@@ -124,23 +124,43 @@
 					working on it</span
 				>
 			</div>
-			<div class="flex-grow relative  inline-block align-baseline m-0 p-0 ">
-				<p class="absolute top-0   z-10 left-2 font-serif translate-y-0  ">This project is about</p>
-				<textarea
-					cols="2"
-					rows="2"
-					class="textarea-bordered -translate-y-[1px] font-serif w-full font-black h-24 input  self-baseline  p-0 pl-2  indent-[147px] shadow-md   "
-					name="name"
-					maxlength="80"
-					on:keyup={updateTitle}
-					placeholder="is about creating a ..."
-					value={form?.project.name ?? ''}
+			<div class="flex-col w-full">
+				<label class="label" for="title">Title</label>
+				<input
+					value={form?.project.title ?? ''}
+					class="input input-bordered"
+					type="text"
+					name="title"
+					id="title"
 				/>
-				<div class="flex justify-between">
-					{#if form?.errors?.name}
-						<span class="label-text text-error text-sm">{form.errors.name[0]}</span>
-					{/if}
-					<div class="label-text  ">{titleLength.length}/80</div>
+				{#if form?.errors?.title}
+					<div>
+						<span class="label-text text-error text-sm">{form.errors.title[0]}</span>
+					</div>
+				{/if}
+
+				<label class="label" for="description"> Description </label>
+				<div class="flex flex-col relative   align-baseline m-0 p-0 ">
+					<p class="absolute top-0   z-10 left-2 font-serif translate-y-0  ">
+						This project is about
+					</p>
+					<textarea
+						cols="2"
+						rows="2"
+						class="textarea-bordered -translate-y-[1px] font-serif w-full font-black h-24 input  self-baseline  p-0 pl-2  indent-[147px] shadow-md   "
+						name="description"
+						id="description"
+						maxlength="80"
+						on:keyup={updateTitle}
+						placeholder="is about creating a ..."
+						value={form?.project.description ?? ''}
+					/>
+					<div class="flex justify-between">
+						{#if form?.errors?.description}
+							<span class="label-text text-error text-sm">{form.errors.description[0]}</span>
+						{/if}
+						<div class=" label label-text  ">{titleLength.length}/80</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -208,11 +228,13 @@
 			</div>
 			<div class="absolute bottom-0 right-5">Estimated Price is : {totalPrice}$</div>
 
-			<div id="first-section" class=" flex flex-grow-1 border-6   ">
+			<div id="first-section" class=" flex flex-col flex-grow-1 border-6   ">
 				<div class="flex md:space-x-4  ">
 					<div class="">
-						<label for="project-pages" class="flex flex-col  ">
-							<span class="label-text">Number of pages</span>
+						<label for="project-pages" class="flex-shrink-1 flex-col  ">
+							<div>
+								<span class="label-text">Number of pages</span>
+							</div>
 							<input
 								class="border-2 input "
 								type="number"
@@ -224,9 +246,11 @@
 								bind:this={pagesElement}
 								on:change={updatePrice}
 							/>
-							<small class="italic"
-								>e.g: If the app only contains a sign-up/login page,it's counted as 2</small
-							>
+							<div class="w-64">
+								<small class="italic"
+									>e.g: If the app only contains a sign-up/login page,it's counted as 2</small
+								>
+							</div>
 						</label>
 					</div>
 					<div class="deadline">
@@ -245,6 +269,21 @@
 							>
 						</label>
 					</div>
+				</div>
+				<div class="pt-4">
+					<label for="project-pages" class="flex flex-col  ">
+						<span class="label-text">Budget</span>
+						<input
+							class="border-2 input "
+							type="text"
+							name="budget"
+							id="budget"
+							value={form?.project?.budget ?? '20'}
+							min="20"
+							max="500"
+						/>
+						<small class="italic">Your maximum budget for this project</small>
+					</label>
 				</div>
 			</div>
 		</div>

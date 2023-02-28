@@ -11,7 +11,7 @@ export const load: LayoutServerLoad = async ({ params, fetch, locals }) => {
 	});
 
 	const projectDetails = await response.json();
-	if (projectDetails.creatorId != userId) throw redirect(301, '/projects');
+	// if (projectDetails.creatorId != userId) throw redirect(301, '/projects');
 	return {
 		projectId,
 		projectDetails

@@ -7,11 +7,12 @@
 	import { menu } from '@skeletonlabs/skeleton';
 	import { id } from 'date-fns/esm/locale';
 	export let project: Project;
+	// console.log('ww');
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <div class="card bg-base-300    w-60  p-4 m-4 relative shadow-xl cursor-pointer">
-	<h2 class="card-title ">{project.name}</h2>
+	<h2 class="card-title ">{project.title}</h2>
 	<h3 class="pt-1 pb-3">{project.type} APP</h3>
 	<p class="m-0 p-0">
 		Deadline: {format(Date.parse(project.deadline.toString()), 'yyyy-MM-dd hh:mm')}
@@ -21,7 +22,7 @@
 		Pending
 	</div>
 	<div class="p-0 m-0 text-xs ">
-		Submitted by {project.name} <br />
+		Submitted by you <br />
 		{formatRelative(new Date(), Date.parse(project.deadline.toString()))}
 	</div>
 	<!-- <Datetimer id={project.id} date={Date.parse(project.deadline.toString())} /> -->

@@ -2,8 +2,9 @@ import type { Project } from '$lib/types/project.type';
 import type { Actions } from '@sveltejs/kit';
 import z from 'zod';
 const projectSchema = z.object({
-	name: z
-		.string({ required_error: 'Project title must have at least 10 characters.' })
+	title:z.string({required_error:"Title must have at least 5 characters"}).min(5).max(20),
+	description: z
+		.string({ required_error: 'Project description must have at least 10 characters.' })
 		.min(10)
 		.max(80),
 	type: z.string({ required_error: 'No category selected' }).min(1),
@@ -12,23 +13,26 @@ const projectSchema = z.object({
 
 export const actions: Actions = {
 	create: async ({ request, fetch, locals }) => {
-		const { name, deadline, pages, technology, type } = Object.fromEntries(
+		const { title,description, deadline, pages, technology, type,budget } = Object.fromEntries(
 			await request.formData()
 		) as {
-			name: string;
+			title:string,
+			description: string;
 			type: string;
 			technology: string;
 			pages: string;
 			deadline: string;
+			budget:string
 		};
 
 		const project: Project = {
 			deadline: new Date(deadline),
-			name: name,
+			title:title,
 			pages: Number.parseInt(pages),
-			description: 'default description',
+			description,
 			technology: technology?.toUpperCase(),
-			type: type?.toUpperCase()
+			type: type?.toUpperCase(),
+			budget:Number.parseInt(budget)
 		};
 
 		try {

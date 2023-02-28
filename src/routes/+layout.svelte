@@ -122,10 +122,20 @@
 	{/if}
 	<!-- Router Slot -->
 	<hr />
-	<div class="mx-8">
+	<div class="mx-auto max-w-4xl">
 		<slot />
 	</div>
 	<hr />
 
 	<Footer />
 </div>
+
+<style>
+	.wrap {
+		height: auto;
+		min-height: 100%;
+		padding: 0 0 80px; /* footer height + space */
+		box-sizing: border-box;
+		overflow: auto;
+	}
+</style>

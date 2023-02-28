@@ -39,7 +39,7 @@
 
 {#if !$page.data.profile}
 	<div
-		class="hero h-[600px]"
+		class="hero h-[600px] max-w-full"
 		style="background-image: url('https://media.istockphoto.com/id/494587588/photo/teacher-helping-a-trouble-teenager.jpg?s=612x612&w=0&k=20&c=E8DfAbG5Q5R2EVltLX8quIVlHOjGMZ2vUW6CtXri2j8=');"
 	>
 		<div class="hero-overlay bg-opacity-60" />
@@ -82,7 +82,7 @@
 		</a>
 	</section>
 {:else if $page.data.profile?.user?.role == 'PROFESSOR'}
-	<section class="p-4 flex flex-col max  items-center xl:items-start space-y-4">
+	<section class="p-4 flex flex-col max-w-4xl m-auto  items-center xl:items-start space-y-4">
 		<p class="text-xl text-justify  font-normal">
 			Welcome dear professor <span class="text-xl font-medium"
 				>{$page.data.profile.user.username}</span
@@ -113,9 +113,9 @@
 		{#await promise}
 			Loading projects
 		{:then projects}
-			<div>
+			<div class="w-full">
 				{#each projects as project}
-					<div class="project card flex flex-col h-40 shadow-md m-4 relative">
+					<div class="project card  flex  flex-col h-40 shadow-md m-4 relative">
 						<!-- <span class="badge badge-sm badge-primary absolute right-0 mb-4 mr-2"
 							>{project.status}</span
 						> -->
@@ -130,15 +130,15 @@
 							</div>
 							<div class="border-left w-0.5 m-0 h-auto  divider-vertical  bg-gray-200" />
 							<div class=" p-4">
-								<p class="">{project.name}</p>
+								<p class="">{project.title}</p>
 								<p class="sub-title text-sm font-light">{project.technology}</p>
 								<p class="text-xs font-light">submitted : {formatAgoDate(project.createdAt)}</p>
 							</div>
 						</div>
 						<hr />
 						<div class="flex-grow card-actions items-center  justify-end  ">
-							<a href="/projects/{project.id}" class="btn btn-xs btn-primary">View Details</a>
-							<button class="btn btn-xs">Not Interested</button>
+							<a href="/projects/{project.id}" class="btn btn-xs btn-primary mr-2">View Details</a>
+							<!-- <button class="btn btn-xs">Not Interested</button> -->
 						</div>
 					</div>
 				{/each}
