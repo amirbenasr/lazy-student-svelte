@@ -113,6 +113,9 @@
 		{#await promise}
 			Loading projects
 		{:then projects}
+			{#if projects.length == 0}
+				No projects found
+			{/if}
 			<div class="w-full">
 				{#each projects as project}
 					<div class="project card  flex  flex-col h-40 shadow-md m-4 relative">

@@ -28,7 +28,7 @@
 
 <Toaster />
 
-<div class="relative h-screen w-screen">
+<div class="relative">
 	<!-- Add verification banner at the top  -->
 	{#if $page.url.searchParams.get('verification') === 'true'}
 		<div
